@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>导航菜单</title>
+    <style>
+    body{
+        background-color: #dee0ff;
+    }
+    #navigation{
+        width: 150px;
+        font-family: Arial;
+        font-size: 14px;
+        text-align: right;
+    }
+    #navigation ul{   /* 后代选择器 */
+        list-style-type: none;
+        margin: 0px;
+        padding: 0px;
+    }
+    #navigation li{
+        border-bottom: 1px solid #9F9FED;
+    }
+    #navigation li a{
+        display: block;   /* 按块元素显示 */
+        height: 1em;
+        padding: 5px 5px 5px 10px;
+        text-decoration: none;
+        border-left: 12px solid rgb(56, 53, 53);
+        border-right: 2px solid rgb(56, 53, 53);
+    }
+    #navigation li a:link,#navigation li a:visited{
+        background-color: skyblue;
+        color:#FFFFFF;
+        padding: 5px 5px 5px 10px;
+    }
+    #navigation li a:hover{
+        background-color: #9F9FED;
+        color: #ffff00;
+        border-left: 12px solid aqua;
+        height: 1em;
+        padding: 6px 6px 5px 12px;
+    }
+    </style>
+</head>
+<body>
+    <div id="navigation">
+    <ul>
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Contact us</a></li>
+    <li><a href="#">Web Dev</a></li>
+    <li><a href="#">Web Design</a></li>
+    <li><a href="#">Map</a></li>
+    </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表单</title>
+    <style>
+        .flex-group{
+            margin-bottom: 15px;
+            display: flex;
+        }
+        .flex-group label{
+            flex: 1 0 40px;   /* 放大因子为1 */
+            max-width: 200px;
+            align-self: center;
+            padding-right: 15px;
+        }
+        .flex-group input,.flex-group textarea{
+            flex: 5 0 200px;
+            padding: 8px 16px;
+            font-size: 14px;
+            line-height: 3;
+            color: #333;
+            background-color: #fff;
+            border: 1px solid #ced4da;
+            font-family: inherit;
+        }
+        .flex-group button{
+            margin-left: auto;   /* 按钮右对齐 */
+            padding: 8px 16px;
+            border: none;
+            background: #333;
+            color: #fff;
+            cursor: pointer;   /* 设置光标类型 */
+        }
+        .flex-form{
+            border: 1px solid #dee2e6;
+            padding: 15px;
+        }
+    </style>
+</head>
+<body>
+    <form class="flex-form">
+        <div class="flex-group">
+            <label for="email" class="label">邮箱</label>
+            <input type="email" id="email" name="email" placeholder="请输入邮箱">
+        </div>
+        <div class="flex-group">
+            <label for="name" class="label">姓名</label>
+            <input type="text" id="name" name="name" placeholder="请输入姓名">
+        </div>
+        <div class="flex-group">
+            <label for="content" class="label">留言内容</label>
+            <textarea name="content" id="content" rows="3" placeholder="请输入留言内容"></textarea>
+        </div>
+        <div class="flex-group">
+            <button type="submit">提交</button>
+        </div>
+    </form>
+</body>
+</html>

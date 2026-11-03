@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // [abc]只要包含其中的任意一个字符
+    console.log(/[abc]/.test('andy'))
+    // [a-z]连字符从a到z
+    console.log(/[a-z]/.test('sdsd'))
+    // 只能输入数字和字母
+    console.log(/[a-zA-Z0-9]/.test('5'))
+    // []里加^是取反
+    //  除了小写英文字母
+    console.log(/[^a-z]/.test('s'))
+    // 预定义
+    // \d相当于0-9 \w匹配任意数字字母下划线
+  </script>
+</body>
+</html>

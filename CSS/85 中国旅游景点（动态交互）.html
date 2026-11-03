@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中国旅游景点（动态交互版）</title>
+<style>
+/* ============================================================
+   0. 设计变量（浅色 / 夜间两套）
+   ============================================================ */
+:root{
+    color-scheme: light;
+    --page:          #f9f9f7;
+    --surface-1:     #fcfcfb;
+    --surface-2:     #f2f1ee;
+    --text-primary:  #0b0b0b;
+    --text-secondary:#52514e;
+    --text-muted:    #898781;
+    --grid:          #e1e0d9;
+    --axis:          #c3c2b7;
+    --border:        rgba(11,11,11,.10);
+    --series-1:      #2a78d6;   /* 柱状图唯一序列色（蓝） */
+    --series-soft:   rgba(42,120,214,.10);
+    --scrim:         rgba(0,0,0,.55);
+}
+:root[data-theme="dark"]{
+    color-scheme: dark;
+    --page:          #0d0d0d;
+    --surface-1:     #1a1a19;
+    --surface-2:     #232322;
+    --text-primary:  #ffffff;
+    --text-secondary:#c3c2b7;
+    --text-muted:    #898781;
+    --grid:          #2c2c2a;
+    --axis:          #383835;
+    --border:        rgba(255,255,255,.10);
+    --series-1:      #3987e5;
+    --series-soft:   rgba(57,135,229,.14);
+    --scrim:         rgba(0,0,0,.68);
+}
+@media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+        color-scheme: dark;
+        --page:          #0d0d0d;
+        --surface-1:     #1a1a19;
+        --surface-2:     #232322;
+        --text-primary:  #ffffff;
+        --text-secondary:#c3c2b7;
+        --text-muted:    #898781;
+        --grid:          #2c2c2a;
+        --axis:          #383835;
+        --border:        rgba(255,255,255,.10);
+        --series-1:      #3987e5;
+        --series-soft:   rgba(57,135,229,.14);
+        --scrim:         rgba(0,0,0,.68);
+    }
+}
+
+/* ============================================================
+   1. 基础排版
+   ============================================================ */
+*{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+body{
+    margin: 0;
+    padding: 0 16px 64px;
+    background: var(--page);
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    transition: background .3s ease, color .3s ease;
+}
+.wrap{ max-width: 1180px; margin: 0 auto; }
+
+h1{ text-align: center; font-size: 30px; margin: 28px 0 6px; letter-spacing: 2px; }
+.subtitle{ text-align: center; color: var(--text-muted); font-size: 13px; margin: 0 0 26px; }
+
+/* 通用按钮 */
+.btn{
+    font: inherit;
+    font-size: 13px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface-1);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: transform .18s ease, background .18s ease,
+                border-color .18s ease, box-shadow .18s ease, color .18s ease;
+}
+.btn:hover{
+    transform: translateY(-2px);
+    border-color: var(--series-1);
+    color: var(--series-1);
+    box-shadow: 0 6px 16px rgba(0,0,0,.10);
+}
+.btn:active{ transform: translateY(0) scale(.97); }
+.btn.primary{
+    background: var(--series-1);
+    border-color: var(--series-1);
+    color: #fff;
+}
+.btn.primary:hover{ color: #fff; filter: brightness(1.08); }
+
+/* ============================================================
+   2. 页头
+   ============================================================ */
+.page-head{ position: relative; }
+#themeToggle{ position: absolute; right: 0; top: 24px; }
+
+/* ============================================================
+   3. 轮播图
+   ============================================================ */
+.carousel{
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    margin-bottom: 26px;
+}
+.car-track{
+    display: flex;
+    height: 360px;
+    transition: transform .55s cubic-bezier(.4,0,.2,1);
+}
+.car-slide{ min-width: 100%; position: relative; }
+.car-slide img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+.car-slide::after{
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, var(--scrim) 0%, transparent 62%);
+}
+/* 轮播箭头 */
+.car-btn{
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.45);
+    background: rgba(0,0,0,.35);
+    color: #fff; font-size: 22px; line-height: 1;
+    cursor: pointer; z-index: 3;
+    transition: background .2s ease, transform .2s ease;
+}
+.car-btn:hover{ background: rgba(0,0,0,.7); transform: translateY(-50%) scale(1.12); }
+.car-btn.prev{ left: 14px; }
+.car-btn.next{ right: 14px; }
+/* 轮播文字层 */
+.car-caption{
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 22px 26px 20px;
+    color: #fff; z-index: 2;
+}
+.car-caption h2{ margin: 0 0 4px; font-size: 24px; letter-spacing: 1px; }
+.car-caption p{ margin: 0 0 12px; font-size: 13px; opacity: .88; max-width: 640px; }
+.car-caption .btn{ font-size: 12px; padding: 6px 12px; }
+/* 圆点指示器 */
+.car-dots{
+    position: absolute; right: 22px; bottom: 22px;
+    display: flex; gap: 8px; z-index: 3;
+}
+.car-dots i{
+    width: 9px; height: 9px; border-radius: 50%;
+    background: rgba(255,255,255,.45);
+    cursor: pointer;
+    transition: width .25s ease, background .25s ease;
+}
+.car-dots i:hover{ background: rgba(255,255,255,.8); }
+.car-dots i.on{ width: 24px; border-radius: 5px; background: #fff; }
+
+/* ============================================================
+   4. 控制面板（滑块 / 按钮 / 统计 / 图表 / 表格）
+   ============================================================ */
+.panel{
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 22px 22px;
+    margin-bottom: 26px;
+}
+.panel-row{
+    display: flex; flex-wrap: wrap; align-items: center;
+    gap: 18px 26px; margin-bottom: 18px;
+}
+.ctl{ display: flex; flex-direction: column; gap: 6px; min-width: 260px; }
+.ctl label{ font-size: 13px; color: var(--text-secondary); }
+.ctl label b{ color: var(--series-1); font-size: 15px; font-variant-numeric: tabular-nums; }
+input[type="range"]{
+    width: 100%; accent-color: var(--series-1); cursor: pointer;
+}
+.ctl-group{ display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* 统计卡（数据与视图联动） */
+.stats{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+.stat{
+    background: var(--surface-2);
+    border-radius: 10px;
+    padding: 12px 14px;
+    transition: background .2s ease, transform .2s ease;
+}
+.stat:hover{ transform: translateY(-2px); background: var(--series-soft); }
+.stat .k{ font-size: 12px; color: var(--text-muted); }
+.stat .v{ font-size: 22px; font-weight: 600; line-height: 1.3; }
+.stat .v small{ font-size: 12px; font-weight: 400; color: var(--text-secondary); }
+
+/* 图表 */
+.chart-title{ font-size: 15px; font-weight: 600; }
+.chart-sub{ font-size: 12px; color: var(--text-muted); margin-left: 10px; }
+.chart{ margin-top: 14px; }
+.bar-row{
+    display: grid;
+    grid-template-columns: 84px 1fr 52px;
+    align-items: center;
+    gap: 10px;
+    padding: 2px 4px;
+    border-radius: 6px;
+    cursor: default;
+    transition: background .18s ease;
+}
+.bar-row:hover, .bar-row:focus-visible{ background: var(--series-soft); outline: none; }
+.bar-name{
+    font-size: 13px; color: var(--text-secondary);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.bar-plot{
+    height: 18px; display: flex; align-items: center;
+    background-image: repeating-linear-gradient(to right,
+        var(--grid) 0 1px, transparent 1px 25%);
+    background-size: 100% 100%;
+}
+.bar-fill{
+    height: 18px;
+    width: calc(var(--w) * 1%);
+    background: var(--series-1);
+    border-radius: 0 4px 4px 0;      /* 基线端方角，数据端 4px 圆角 */
+    transition: width .45s cubic-bezier(.4,0,.2,1), background .3s ease;
+}
+.bar-value{
+    font-size: 13px; color: var(--text-secondary);
+    font-variant-numeric: tabular-nums; text-align: right;
+}
+/* 被滑块筛掉的景点：中性灰 + 文字降级（不是换一个"系列色"） */
+.bar-row.off .bar-fill{ background: var(--axis); }
+.bar-row.off .bar-name,
+.bar-row.off .bar-value{ color: var(--text-muted); text-decoration: line-through; }
+
+/* 坐标轴刻度（与绘图区对齐） */
+.bar-axis{
+    display: grid; grid-template-columns: 84px 1fr 52px;
+    gap: 10px; margin-top: 6px;
+}
+.bar-axis .ticks{
+    grid-column: 2;
+    display: flex; justify-content: space-between;
+    font-size: 11px; color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    border-top: 1px solid var(--axis); padding-top: 4px;
+}
+.chart-note{
+    font-size: 12px; color: var(--text-muted);
+    margin: 12px 0 0;
+}
+
+/* 图表提示框 */
+#tip{
+    position: fixed; z-index: 90;
+    pointer-events: none;
+    background: var(--text-primary);
+    color: var(--page);
+    font-size: 12px; line-height: 1.5;
+    padding: 8px 11px; border-radius: 8px;
+    white-space: nowrap;
+    opacity: 0; transform: translate(-50%, -120%);
+    transition: opacity .15s ease;
+}
+#tip.on{ opacity: 1; }
+#tip b{ font-size: 15px; font-variant-numeric: tabular-nums; }
+
+/* 表格视图（窄屏时表格自己横向滚动，不撑破页面） */
+.table-wrap[hidden]{ display: none; }
+.table-wrap{ overflow-x: auto; }
+table{ width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 6px; }
+caption{ text-align: left; font-size: 13px; color: var(--text-muted); padding-bottom: 8px; }
+th, td{ padding: 8px 10px; border-bottom: 1px solid var(--grid); text-align: left; }
+th{ color: var(--text-muted); font-weight: 500; font-size: 12px; }
+td.num{ text-align: right; font-variant-numeric: tabular-nums; }
+tbody tr{ transition: background .18s ease; }
+tbody tr:hover{ background: var(--series-soft); }
+
+/* ============================================================
+   5. 景点卡片网格（沿用第 80 号文件的响应式断点）
+   ============================================================ */
+.container{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    align-items: start;
+}
+.card{
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface-1);
+    overflow: hidden;
+    transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+}
+/* 鼠标移入的视觉反馈 */
+.card:hover,
+.card.expanded{
+    transform: translateY(-6px);
+    border-color: var(--series-1);
+    box-shadow: 0 14px 30px rgba(0,0,0,.14);
+}
+.card .thumb{ height: 170px; overflow: hidden; }
+.card .thumb img{
+    width: 100%; height: 100%; object-fit: cover;
+    display: block;
+    transition: transform .5s ease;
+}
+.card:hover .thumb img{ transform: scale(1.07); }
+.card-body{ padding: 14px 16px 16px; }
+.card h2{
+    margin: 0 0 6px; font-size: 17px;
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+}
+/* 推荐指数：由热度条件判断生成 */
+.badge{
+    font-size: 11px; font-weight: 400;
+    padding: 2px 8px; border-radius: 999px;
+    background: var(--series-soft); color: var(--series-1);
+    white-space: nowrap;
+}
+.card-meta{
+    font-size: 12px; color: var(--text-muted);
+    margin-bottom: 8px;
+}
+/* 正文：默认 3 行截断 + "..."，悬停展开全文 */
+.card p{
+    color: var(--text-secondary);
+    font-size: 13px;
+    max-height: 4.5em;
+    line-height: 1.5;
+    overflow: hidden;
+    position: relative;
+    margin: 0 0 12px;
+    transition: max-height .45s ease;
+}
+.card p::after{
+    content: "...";
+    position: absolute; bottom: 0; right: 0;
+    background: var(--surface-1);
+    padding-left: 5px; padding-right: 2px;
+    transition: opacity .2s ease;
+}
+.card.expanded p{ max-height: 40em; }
+.card.expanded p::after{ opacity: 0; }
+.card-foot{
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 12px; color: var(--text-muted);
+}
+.hint{ font-size: 12px; color: var(--text-muted); }
+.card.expanded .hint{ color: var(--series-1); }
+/* 随机 / 轮播定位时的高亮脉冲 */
+@keyframes flash{
+    0%   { box-shadow: 0 0 0 0 rgba(42,120,214,.55); }
+    100% { box-shadow: 0 0 0 18px rgba(42,120,214,0); }
+}
+.card.flash{ animation: flash .9s ease-out 2; }
+.card.hide{ display: none; }
+
+/* ============================================================
+   6. 详情弹窗
+   ============================================================ */
+.modal-mask{
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(0,0,0,.55);
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+    opacity: 0; transition: opacity .25s ease;
+}
+.modal-mask[hidden]{ display: none; }
+.modal-mask.on{ opacity: 1; }
+.modal{
+    background: var(--surface-1);
+    border-radius: 14px;
+    width: min(760px, 100%);
+    max-height: 88vh;
+    overflow: auto;
+    position: relative;
+    transform: translateY(16px) scale(.97);
+    transition: transform .28s cubic-bezier(.4,0,.2,1);
+}
+.modal-mask.on .modal{ transform: translateY(0) scale(1); }
+.modal > img{ width: 100%; height: 250px; object-fit: cover; display: block; }
+.modal-body{ padding: 20px 24px 8px; }
+.modal-body h2{ margin: 0 0 8px; font-size: 22px; }
+.modal-meta{ font-size: 13px; color: var(--text-muted); margin-bottom: 14px; }
+.modal-body p{ margin: 0 0 16px; color: var(--text-secondary); font-size: 14px; }
+.modal-facts{
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 10px; margin-bottom: 18px;
+}
+.modal-facts div{
+    background: var(--surface-2); border-radius: 8px; padding: 10px 12px;
+}
+.modal-facts .k{ font-size: 12px; color: var(--text-muted); }
+.modal-facts .v{ font-size: 16px; font-weight: 600; }
+.modal-foot{
+    display: flex; justify-content: space-between; gap: 10px;
+    padding: 0 24px 20px;
+}
+.modal-close{
+    position: absolute; top: 12px; right: 12px;
+    width: 34px; height: 34px; border-radius: 50%;
+    border: none; cursor: pointer;
+    background: rgba(0,0,0,.5); color: #fff;
+    font-size: 20px; line-height: 1;
+    transition: background .2s ease, transform .2s ease;
+}
+.modal-close:hover{ background: rgba(0,0,0,.85); transform: rotate(90deg); }
+
+/* ============================================================
+   7. 响应式（断点与第 80 号文件保持一致）
+   ============================================================ */
+@media (max-width: 1024px){
+    .container{ grid-template-columns: repeat(3, 1fr); }
+    .stats{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px){
+    .container{ grid-template-columns: repeat(2, 1fr); }
+    .car-track{ height: 260px; }
+    .car-caption h2{ font-size: 19px; }
+    .modal-facts{ grid-template-columns: repeat(2, 1fr); }
+    #themeToggle{ position: static; display: block; margin: 0 auto 8px; }
+}
+@media (max-width: 576px){
+    .container{ grid-template-columns: 1fr; }
+    .stats{ grid-template-columns: 1fr; }
+    .panel{ padding: 16px; }
+    .car-track{ height: 200px; }
+    .bar-row, .bar-axis{ grid-template-columns: 64px 1fr 44px; }
+}
+
+/* 尊重"减少动态效果"的系统设置 */
+@media (prefers-reduced-motion: reduce){
+    *{ transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    html{ scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+    <!-- ========== 页头 ========== -->
+    <header class="page-head">
+        <button class="btn" id="themeToggle">🌙 夜间模式</button>
+        <h1>中国旅游景点</h1>
+    </header>
+
+    <!-- ========== ① 轮播图 ========== -->
+    <section class="carousel" id="carousel" aria-label="景点轮播图">
+        <div class="car-track" id="carTrack"></div>
+        <button class="car-btn prev" id="carPrev" aria-label="上一张">‹</button>
+        <button class="car-btn next" id="carNext" aria-label="下一张">›</button>
+        <div class="car-caption">
+            <h2 id="capTitle"></h2>
+            <p id="capDesc"></p>
+            <button class="btn primary" id="capDetail">查看详情</button>
+            <button class="btn" id="capRandom">🎲 随机看一个</button>
+        </div>
+        <div class="car-dots" id="carDots"></div>
+    </section>
+
+    <!-- ========== ② 控制面板 ========== -->
+    <section class="panel">
+        <!-- 筛选行：作用于下方所有视图 -->
+        <div class="panel-row">
+            <div class="ctl">
+                <label for="hotRange">最低热度：<b id="hotVal">60</b> 分</label>
+                <input type="range" id="hotRange" min="60" max="100" step="1" value="60">
+            </div>
+            <div class="ctl-group">
+                <button class="btn" id="sortBtn">排序：默认</button>
+                <button class="btn primary" id="randBtn">🎲 随机选一个景点并进入介绍</button>
+                <button class="btn" id="tableBtn">表格视图</button>
+            </div>
+        </div>
+
+        <!-- 统计：全部由 JS 计算得出 -->
+        <div class="stats" id="stats"></div>
+
+        <!-- 柱状图 -->
+        <figure style="margin:0">
+            <figcaption>
+                <span class="chart-title">各景点热度对比</span>
+                <span class="chart-sub">（满分 100 分 · 示例数据）</span>
+            </figcaption>
+            <div class="chart" id="chart"></div>
+            <div class="bar-axis">
+                <div class="ticks"><span>0</span><span>25</span><span>50</span><span>75</span><span>100</span></div>
+            </div>
+            <p class="chart-note" id="chartNote"></p>
+        </figure>
+
+        <!-- 表格视图（图表的无障碍等价物） -->
+        <div class="table-wrap" id="tableWrap" hidden>
+            <table>
+                <caption>景点数据表（与上方图表、下方卡片使用同一份筛选结果）</caption>
+                <thead>
+                    <tr>
+                        <th>景点</th><th>所在地</th>
+                        <th style="text-align:right">热度</th>
+                        <th style="text-align:right">建议游览</th>
+                        <th style="text-align:right">门票(元)</th>
+                        <th style="text-align:right">年接待游客(万人次)</th>
+                        <th>推荐指数</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ========== ③ 景点卡片（悬停展开全文） ========== -->
+    <div class="container" id="container"></div>
+</div>
+
+<!-- 图表提示框 -->
+<div id="tip"></div>
+
+<!-- ========== ④ 详情弹窗 ========== -->
+<div class="modal-mask" id="modalMask" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+        <button class="modal-close" id="mClose" aria-label="关闭">×</button>
+        <img id="mImg" src="" alt="">
+        <div class="modal-body">
+            <h2 id="mTitle"></h2>
+            <div class="modal-meta" id="mMeta"></div>
+            <p id="mText"></p>
+            <div class="modal-facts" id="mFacts"></div>
+        </div>
+        <div class="modal-foot">
+            <button class="btn" id="mPrev">← 上一个</button>
+            <button class="btn" id="mNext">下一个 →</button>
+        </div>
+    </div>
+</div>
+
+<script>
+/* ============================================================
+   数据源：4 个原有景点 + 新增「天安门」，共 5 个（内容扩充）
+   img 路径与第 80 号文件完全一致，所以本文件必须和它放在同一目录
+   ============================================================ */
+const SPOTS = [
+    {
+        name: '后海',
+        img: '../html/content1/后海.webp',
+        loc: '北京市西城区',
+        hot: 88,          // 热度评分（满分 100）
+        hours: 3,         // 建议游览时长（小时）
+        price: 0,         // 门票（元）
+        visitors: 1200,   // 年接待游客（万人次）
+        tag: '先有什刹海，后有北京城',
+        brief: '说是“海”，其实是一个巨大的人工湖，是旧时皇家独享的一泓清池。后海地处北京市中心，距天安门仅有四、五站地，与著名的北海一水相连，与景山、故宫遥遥相对。沿海走着走着，一不留神就会看到碧瓦红墙。在那些高大庄严的大门外，只能看到院内高大森郁的树木，幽幽的透着神秘。',
+        detail: '说是“海”，其实是一个巨大的人工湖，是旧时皇家独享的一泓清池。后海地处北京市中心，距天安门仅有四、五站地，与著名的北海一水相连，与景山、故宫遥遥相对。沿海走着走着，一不留神就会看到碧瓦红墙。在那些高大庄严的大门外，只能看到院内高大森郁的树木。幽幽的透着神秘。据说，后海的水域连着故宫的龙脉，从古到现代都是风水宝地。所以，历代的高僧们在这里修建寺庙，而王公大臣们则在岸边选址筑府造园，名人们也纷纷迁居湖畔，开始了后海边上最初的水岸生活。因此，俗语说，“先有什刹海，后有北京城”。'
+    },
+    {
+        name: '南锣鼓巷',
+        img: '../html/content1/南锣鼓巷.webp',
+        loc: '北京市东城区',
+        hot: 92,
+        hours: 2.5,
+        price: 0,
+        visitors: 1500,
+        tag: '元代胡同院落 · 鱼骨状街区',
+        brief: '南锣鼓巷是一条具有深厚历史文化底蕴的名巷，也是北京最古老的街区之一，仍然完整保留着元代胡同院落的独特肌理，是中国规模最大、品级最高且资源最为丰富的传统棋盘式民居区域。南锣鼓巷东西两面共有16条胡同整齐排列，呈鱼骨状，俯瞰整个街区犹如蜈蚣，又称蜈蚣街。',
+        detail: '南锣鼓巷是一条具有深厚历史文化底蕴的名巷，也是北京最古老的街区之一，仍然完整保留着元代胡同院落的独特肌理，是中国规模最大、品级最高且资源最为丰富的传统棋盘式民居区域。南锣鼓巷东西两面共有16条胡同整齐排列，呈鱼骨状，俯瞰整个街区犹如蜈蚣，又称蜈蚣街。南锣鼓巷的形成可追溯至元朝大都城的兴建时期。在清代的乾隆年间，此地为镶黄旗的驻扎地；而到了光绪末年至宣统年间，又被划归为内左三区；进入民国时期，则变成了内五区的一部分。南锣鼓巷曾经汇聚了众多高官显要与文化名流，不仅完好保存了众多历史悠久的胡同与青砖灰瓦的四合院，还因名人故居而沉积了深厚的人文历史底蕴。'
+    },
+    {
+        name: '北海公园',
+        img: '../html/content1/北海公园.webp',
+        loc: '北京市西城区',
+        hot: 95,
+        hours: 4,
+        price: 10,
+        visitors: 1000,
+        tag: '现存建园最早的古典皇家园林',
+        brief: '北海公园位于北京的中心地区，故宫西北部，东靠景山，南临中南海，北接什刹海。北海公园占地总面积68.2万平方米，其中水面积38.9万平方米，陆地面积29.3万平方米。是中国现存历史上建园最早、保存最完整、文化沉积最深厚的古典皇家园林，国家AAAA级旅游景区。',
+        detail: '北海公园位于北京的中心地区，故宫西北部，东靠景山，南临中南海，北接什刹海 ，北海公园占地总面积68.2万平方米，其中水面积38.9万平方米，陆地面积29.3万平方米。是中国现存历史上建园最早、保存最完整、文化沉积最深厚的古典皇家园林，国家AAAA级旅游景区。园内的琼华岛、白塔、九龙壁、静心斋等景点各具特色：琼华岛上的白塔矗立于全园制高点，是北海最醒目的标志；九龙壁用彩色琉璃砖砌成，两面各有九条蟠龙，是我国现存三座九龙壁中最精美的一座。'
+    },
+    {
+        name: '北海园博园',
+        img: '../html/content1/北海园博园.webp',
+        loc: '广西壮族自治区北海市',
+        hot: 76,
+        hours: 3.5,
+        price: 60,
+        visitors: 320,
+        tag: '花海丝路 · 绿映珠城',
+        brief: '北海园博园以“花海丝路·绿映珠城”为主题，项目位于广西北海市南珠大道以东、银滩大道以北，是2014年第四届广西园博会的举办地，是城市绿心的核心组成部分，包括一主两副三个园区，总用地面积约298公顷，属城市规划绿地。',
+        detail: '北海园博园以“花海丝路·绿映珠城”为主题，项目位于广西北海市南珠大道以东、银滩大道以北，是2014年第四届广西园博会的举办地，是城市绿心的核心组成部分，包括一主两副三个园区，总用地面积约298公顷，属城市规划绿地。园博会规划建设室外展园（包括广西设区市城市园林展园、东盟十国园林展园、优秀园林大师展园、企业盈利展园等）、室内展园（园林规划作品、植物新品种、花卉、盆景、插花、书画摄影、赏石等展览）及各类园林园艺相关活动。'
+    },
+    {
+        /* ← 本次扩充的新景点 */
+        name: '天安门',
+        img: '../html/content1/天安门.jpg',
+        loc: '北京市东城区',
+        hot: 99,
+        hours: 2,
+        price: 0,
+        visitors: 2000,
+        tag: '中华人民共和国的象征',
+        brief: '天安门位于北京市中轴线和长安街的交汇点，是明清两代皇城的正门，始建于明永乐十五年（1417年），原名承天门，清顺治八年（1651年）改建后称天安门。1949年10月1日，中华人民共和国开国大典在此举行，天安门由此成为中华人民共和国的象征。',
+        detail: '天安门位于中华人民共和国首都北京市中轴线和长安街的交汇点，东城区、西城区两个区的分界点，面临长安街。天安门的主体建筑是城楼：城楼分上下两层，下层是汉白玉石须弥座，上建高大的朱红色城台，下大上小，呈梯形状；上层是城楼大殿，从城台顶到大殿屋顶高约21.7米，属于典型的中国传统宫殿式建筑。城楼重檐歇山顶，上覆黄琉璃瓦，正脊两端置鸱吻，戗脊列9尊小兽，面阔9间，进深5间，取“九五之尊”之意。城台下大上小，收分明显：下端长120米、宽40米，底部面积4800平方米；城台有券门五阙，中间的券门最大，高8.82米、宽5.25米，正好压在北京城的中轴线上，明清时期只有皇帝才可以由中间的门洞通过。在天安门城台东西内侧，早年各有一条长30米、宽6.5米的漫坡道，俗称“马道”。1949年开国大典时，毛泽东等党和国家领导人就是从城台西侧的马道一步步登上天安门城楼的。'
+    }
+];
+
+/* ============================================================
+   逻辑层：筛选 → 排序 → 统计，所有视图共用同一个结果
+   ============================================================ */
+const state = {
+    minHot: 60,                                  // 滑块阈值
+    sort: 0,                                     // 0 默认 / 1 热度降序 / 2 游客降序
+    theme: 'light'
+};
+
+/** 按热度条件判断推荐指数（条件判断） */
+function recommend(hot){
+    if (hot >= 95) return '爆款推荐';
+    if (hot >= 90) return '人气热门';
+    if (hot >= 85) return '值得一去';
+    return '小众清幽';
+}
+
+/** 数据与视图联动的核心：先筛选，再排序 */
+function getVisible(){
+    const list = SPOTS.filter(s => s.hot >= state.minHot);   // 条件筛选
+    if (state.sort === 1)      list.sort((a, b) => b.hot - a.hot);          // 排序：热度
+    else if (state.sort === 2) list.sort((a, b) => b.visitors - a.visitors);// 排序：游客量
+    return list;
+}
+
+/** 求和 / 平均 / 最大值（计算过程） */
+function calcStats(list){
+    if (!list.length) return null;
+    const totalVisitors = list.reduce((sum, s) => sum + s.visitors, 0);   // 求和
+    const avgHot = list.reduce((sum, s) => sum + s.hot, 0) / list.length; // 平均值
+    const top = list.reduce((max, s) => s.hot > max.hot ? s : max, list[0]); // 最大值
+    const freeCount = list.filter(s => s.price === 0).length;             // 条件计数
+    return { totalVisitors, avgHot, top, freeCount };
+}
+
+/* ============================================================
+   视图层
+   ============================================================ */
+const $ = id => document.getElementById(id);
+const carTrack = $('carTrack'), carDots = $('carDots');
+const container = $('container'), chart = $('chart'), tip = $('tip');
+
+/* ---------- ③ 卡片网格 ---------- */
+function renderCards(list){
+    container.innerHTML = '';
+    if (!list.length){
+        container.innerHTML = '<p class="subtitle">没有满足条件的景点，请把滑块往左拖一点。</p>';
+        return;
+    }
+    list.forEach(spot => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.dataset.name = spot.name;
+
+        const thumb = document.createElement('div');
+        thumb.className = 'thumb';
+        const img = document.createElement('img');
+        img.src = spot.img;
+        img.alt = spot.name;
+        img.loading = 'lazy';
+        thumb.appendChild(img);
+
+        const body = document.createElement('div');
+        body.className = 'card-body';
+
+        const h2 = document.createElement('h2');
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = spot.name;
+        const badge = document.createElement('span');
+        badge.className = 'badge';
+        badge.textContent = recommend(spot.hot);   // 条件判断的结果显示在页面上
+        h2.append(nameSpan, badge);
+
+        const meta = document.createElement('div');
+        meta.className = 'card-meta';
+        meta.textContent = '📍 ' + spot.loc +
+            ' · ⏱ 建议 ' + spot.hours + ' 小时' +
+            ' · 🎫 ' + (spot.price === 0 ? '免费' : spot.price + ' 元');
+
+        const p = document.createElement('p');
+        p.textContent = spot.brief;   // 用 textContent 写入，避免 HTML 注入
+
+        const foot = document.createElement('div');
+        foot.className = 'card-foot';
+        const hint = document.createElement('span');
+        hint.className = 'hint';
+        hint.textContent = '鼠标移入查看全文';
+        const more = document.createElement('button');
+        more.className = 'btn';
+        more.textContent = '查看详情';
+        more.style.fontSize = '12px';
+        more.style.padding = '5px 10px';
+        more.addEventListener('click', () => openModal(spot.name));
+        foot.append(hint, more);
+
+        body.append(h2, meta, p, foot);
+        card.append(thumb, body);
+
+        /* —— 每个景点底下的交互：鼠标移入展开全文，移开收起 —— */
+        card.addEventListener('mouseenter', () => {
+            card.classList.add('expanded');
+            hint.textContent = '已展开全文';
+        });
+        card.addEventListener('mouseleave', () => {
+            card.classList.remove('expanded');
+            hint.textContent = '鼠标移入查看全文';
+        });
+        /* 键盘用户也能展开（Tab 聚焦时） */
+        card.addEventListener('focusin',  () => card.classList.add('expanded'));
+        card.addEventListener('focusout', () => card.classList.remove('expanded'));
+
+        container.appendChild(card);
+    });
+}
+
+/* ---------- ② 统计卡 ---------- */
+function renderStats(list){
+    const st = calcStats(list);
+    const box = $('stats');
+    box.innerHTML = '';
+    if (!st){
+        box.innerHTML = '<div class="stat"><div class="k">筛选结果</div><div class="v">0 个景点</div></div>';
+        return;
+    }
+    const items = [
+        { k: '当前显示景点', v: list.length + ' <small>/ ' + SPOTS.length + ' 个</small>' },
+        { k: '平均热度',     v: st.avgHot.toFixed(1) + ' <small>分</small>' },
+        { k: '合计年接待游客', v: st.totalVisitors.toLocaleString() + ' <small>万人次</small>' },
+        { k: '最热门 · 免费景点', v: st.top.name + ' <small>· ' + st.freeCount + ' 个免费</small>' }
+    ];
+    items.forEach(it => {
+        const d = document.createElement('div');
+        d.className = 'stat';
+        const k = document.createElement('div'); k.className = 'k'; k.textContent = it.k;
+        const v = document.createElement('div'); v.className = 'v'; v.innerHTML = it.v;
+        d.append(k, v);
+        box.appendChild(d);
+    });
+}
+
+/* ---------- 柱状图（单序列 → 单一蓝色；灰 = 被筛掉的） ---------- */
+function renderChart(list){
+    chart.innerHTML = '';
+    SPOTS.forEach(spot => {
+        const visible = list.some(s => s.name === spot.name);
+        const row = document.createElement('div');
+        row.className = 'bar-row' + (visible ? '' : ' off');
+        row.tabIndex = 0;
+        row.dataset.name = spot.name;
+
+        const name = document.createElement('span');
+        name.className = 'bar-name';
+        name.textContent = spot.name;
+
+        const plot = document.createElement('div');
+        plot.className = 'bar-plot';
+        const fill = document.createElement('div');
+        fill.className = 'bar-fill';
+        fill.style.setProperty('--w', spot.hot);   // 长度 = 热度，从 0 基线出发
+        plot.appendChild(fill);
+
+        const val = document.createElement('span');
+        val.className = 'bar-value';
+        val.textContent = spot.hot;
+
+        row.append(name, plot, val);
+
+        /* 悬停 / 聚焦显示提示框（值同时已直接标注在图上，不依赖提示框） */
+        const show = () => showTip(row, spot);
+        row.addEventListener('mouseenter', show);
+        row.addEventListener('mousemove', show);
+        row.addEventListener('focus', show);
+        row.addEventListener('mouseleave', hideTip);
+        row.addEventListener('blur', hideTip);
+
+        chart.appendChild(row);
+    });
+
+    const off = SPOTS.length - list.length;
+    $('chartNote').textContent = off === 0
+        ? '共 ' + SPOTS.length + ' 个景点全部显示。把滑块往右拖动，可以按热度筛掉一部分。'
+        : '灰色划线的是低于 ' + state.minHot + ' 分、已被滑块筛掉的 ' + off + ' 个景点。';
+}
+
+function showTip(row, spot){
+    const r = row.getBoundingClientRect();
+    tip.textContent = '';
+    const strong = document.createElement('b');
+    strong.textContent = spot.hot;
+    const line1 = document.createTextNode(spot.name + '　热度 ');
+    const line2 = document.createElement('div');
+    line2.textContent = '建议游览 ' + spot.hours + ' 小时 · ' +
+        (spot.price === 0 ? '免费' : '门票 ' + spot.price + ' 元') +
+        ' · 年接待 ' + spot.visitors + ' 万人次';
+    tip.append(line1, strong, line2);
+    tip.style.left = (r.left + r.width / 2) + 'px';
+    tip.style.top = (r.top - 6) + 'px';
+    tip.classList.add('on');
+}
+function hideTip(){ tip.classList.remove('on'); }
+
+/* ---------- 表格视图 ---------- */
+function renderTable(list){
+    const tb = $('tbody');
+    tb.innerHTML = '';
+    list.forEach(s => {
+        const tr = document.createElement('tr');
+        const cells = [
+            [s.name], [s.loc],
+            [s.hot, 'num'], [s.hours + ' 小时', 'num'],
+            [s.price === 0 ? '免费' : s.price, 'num'],
+            [s.visitors.toLocaleString(), 'num'],
+            [recommend(s.hot)]
+        ];
+        cells.forEach(([text, cls]) => {
+            const td = document.createElement('td');
+            if (cls) td.className = cls;
+            td.textContent = text;
+            tr.appendChild(td);
+        });
+        tb.appendChild(tr);
+    });
+    if (!list.length){
+        const tr = document.createElement('tr');
+        const td = document.createElement('td');
+        td.colSpan = 7;
+        td.textContent = '没有满足条件的景点。';
+        tr.appendChild(td);
+        tb.appendChild(tr);
+    }
+}
+
+/* ---------- 统一的刷新入口：一处改数据，四处视图同时更新 ---------- */
+let lastCardKey = '';   // 记录上一次卡片的内容与顺序，避免拖动滑块时反复重建 DOM
+
+function updateAll(){
+    const list = getVisible();
+    renderStats(list);
+    renderChart(list);
+    renderTable(list);
+    /* 只有"可见的景点集合或顺序"真的变了才重建卡片，
+       这样拖动滑块时卡片不会被反复销毁重建（悬停展开也不会被打断） */
+    const key = list.map(s => s.name).join('|');
+    if (key !== lastCardKey){
+        lastCardKey = key;
+        renderCards(list);
+    }
+}
+
+/* ============================================================
+   ① 轮播图
+   ============================================================ */
+let carIndex = 0, carTimer = null;
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function buildCarousel(){
+    SPOTS.forEach((spot, i) => {
+        const slide = document.createElement('div');
+        slide.className = 'car-slide';
+        const img = document.createElement('img');
+        img.src = spot.img;
+        img.alt = spot.name;
+        slide.appendChild(img);
+        carTrack.appendChild(slide);
+
+        const dot = document.createElement('i');
+        dot.title = spot.name;
+        dot.addEventListener('click', () => goSlide(i));
+        carDots.appendChild(dot);
+    });
+}
+
+function goSlide(i){
+    carIndex = (i + SPOTS.length) % SPOTS.length;   // 取余实现首尾循环
+    carTrack.style.transform = 'translateX(' + (-carIndex * 100) + '%)';
+    const spot = SPOTS[carIndex];
+    $('capTitle').textContent = spot.name;
+    $('capDesc').textContent = spot.tag + ' · 热度 ' + spot.hot + ' 分 · ' + spot.loc;
+    [...carDots.children].forEach((d, k) => d.classList.toggle('on', k === carIndex));
+}
+
+function autoPlay(){
+    if (reduceMotion) return;
+    stopPlay();
+    carTimer = setInterval(() => goSlide(carIndex + 1), 4000);
+}
+function stopPlay(){ if (carTimer) clearInterval(carTimer); carTimer = null; }
+
+$('carPrev').addEventListener('click', () => { goSlide(carIndex - 1); autoPlay(); });
+$('carNext').addEventListener('click', () => { goSlide(carIndex + 1); autoPlay(); });
+/* 鼠标移入轮播图暂停自动播放，移出恢复 —— 悬停视觉反馈 */
+$('carousel').addEventListener('mouseenter', stopPlay);
+$('carousel').addEventListener('mouseleave', autoPlay);
+
+$('capDetail').addEventListener('click', () => openModal(SPOTS[carIndex].name));
+$('capRandom').addEventListener('click', () => {
+    goSlide(Math.floor(Math.random() * SPOTS.length));   // 随机生成
+    autoPlay();
+});
+
+/* ============================================================
+   ② 滑块 / 排序 / 表格 / 主题
+   ============================================================ */
+$('hotRange').addEventListener('input', e => {
+    state.minHot = Number(e.target.value);
+    $('hotVal').textContent = state.minHot;   // 实时数字反馈
+    updateAll();                              // 实时更新卡片、图表、统计、表格
+});
+
+$('sortBtn').addEventListener('click', e => {
+    state.sort = (state.sort + 1) % 3;
+    e.target.textContent = ['排序：默认', '排序：热度高→低', '排序：游客多→少'][state.sort];
+    updateAll();
+});
+
+$('tableBtn').addEventListener('click', e => {
+    const w = $('tableWrap');
+    w.hidden = !w.hidden;
+    e.target.textContent = w.hidden ? '表格视图' : '收起表格';
+});
+
+$('themeToggle').addEventListener('click', e => {
+    state.theme = state.theme === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', state.theme);
+    e.target.textContent = state.theme === 'dark' ? '☀️ 日间模式' : '🌙 夜间模式';
+});
+
+/* ============================================================
+   ④ 随机按钮：随机选一个景点并进入介绍
+   ============================================================ */
+$('randBtn').addEventListener('click', () => {
+    const list = getVisible();
+    if (!list.length){
+        alert('当前筛选结果为空，请先把滑块往左拖。');
+        return;
+    }
+    /* 先在符合条件的景点里随机抽一个 */
+    const pick = list[Math.floor(Math.random() * list.length)];
+
+    /* 抽奖滚动效果：快速闪过若干个名字再停下 */
+    const btn = $('randBtn');
+    const original = btn.textContent;
+    let ticks = 0;
+    btn.disabled = true;
+    const roll = setInterval(() => {
+        const tmp = list[Math.floor(Math.random() * list.length)];
+        btn.textContent = '🎲 ' + tmp.name;
+        if (++ticks > 12){
+            clearInterval(roll);
+            btn.textContent = original;
+            btn.disabled = false;
+            /* 定位到卡片、高亮，然后打开介绍 */
+            const card = container.querySelector('[data-name="' + pick.name + '"]');
+            if (card){
+                card.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                card.classList.add('flash');
+                setTimeout(() => card.classList.remove('flash'), 1800);
+            }
+            setTimeout(() => openModal(pick.name), 260);
+        }
+    }, 70);
+});
+
+/* ============================================================
+   ④ 详情弹窗
+   ============================================================ */
+let modalIndex = 0, modalList = [];
+
+function openModal(name){
+    modalList = getVisible();
+    if (!modalList.some(s => s.name === name)) modalList = SPOTS.slice(); // 被筛掉时退回全部
+    modalIndex = modalList.findIndex(s => s.name === name);
+    paintModal();
+
+    const mask = $('modalMask');
+    mask.hidden = false;
+    requestAnimationFrame(() => mask.classList.add('on'));  // 触发过渡动画
+    document.body.style.overflow = 'hidden';
+}
+
+function paintModal(){
+    const s = modalList[modalIndex];
+    if (!s) return;
+    $('mImg').src = s.img;
+    $('mImg').alt = s.name;
+    $('mTitle').textContent = s.name;
+    $('mMeta').textContent = s.loc + ' · 推荐指数：' + recommend(s.hot) +
+        ' · 第 ' + (modalIndex + 1) + ' / ' + modalList.length + ' 个';
+    $('mText').textContent = s.detail;
+    const facts = [
+        ['热度评分', s.hot + ' 分'],
+        ['建议游览', s.hours + ' 小时'],
+        ['门票', s.price === 0 ? '免费' : s.price + ' 元'],
+        ['年接待游客', s.visitors.toLocaleString() + ' 万人次']
+    ];
+    const box = $('mFacts');
+    box.innerHTML = '';
+    facts.forEach(([k, v]) => {
+        const d = document.createElement('div');
+        const kd = document.createElement('div'); kd.className = 'k'; kd.textContent = k;
+        const vd = document.createElement('div'); vd.className = 'v'; vd.textContent = v;
+        d.append(kd, vd);
+        box.appendChild(d);
+    });
+}
+
+function closeModal(){
+    const mask = $('modalMask');
+    mask.classList.remove('on');
+    setTimeout(() => { mask.hidden = true; }, 250);
+    document.body.style.overflow = '';
+}
+
+$('mClose').addEventListener('click', closeModal);
+$('modalMask').addEventListener('click', e => { if (e.target === $('modalMask')) closeModal(); });
+$('mPrev').addEventListener('click', () => {
+    modalIndex = (modalIndex - 1 + modalList.length) % modalList.length;
+    paintModal();
+});
+$('mNext').addEventListener('click', () => {
+    modalIndex = (modalIndex + 1) % modalList.length;
+    paintModal();
+});
+/* 键盘：← → 切换，Esc 关闭 */
+document.addEventListener('keydown', e => {
+    const t = e.target;
+    const onControl = t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable);
+    if ($('modalMask').hidden){
+        if (onControl) return;   // 焦点在滑块上时，方向键交给滑块自己用
+        if (e.key === 'ArrowLeft')  { goSlide(carIndex - 1); autoPlay(); }
+        if (e.key === 'ArrowRight') { goSlide(carIndex + 1); autoPlay(); }
+        return;
+    }
+    if (e.key === 'Escape')     closeModal();
+    if (e.key === 'ArrowLeft')  $('mPrev').click();
+    if (e.key === 'ArrowRight') $('mNext').click();
+});
+
+/* ============================================================
+   启动
+   ============================================================ */
+buildCarousel();
+goSlide(0);
+autoPlay();
+updateAll();
+</script>
+</body>
+</html>

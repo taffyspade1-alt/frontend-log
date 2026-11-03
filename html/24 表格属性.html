@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>表格基本结构</title>
+</head>
+<body>
+    <!-- width调整宽 height调整高 cellspacing调整表格间距-->
+    <table border="1" width="500" height="300" cellspacing="0">
+        <!-- 表格标题 -->
+        <caption>学生信息</caption>
+        <!-- 表头 -->
+         <!--
+        align调整水平位置，靠左left靠右right居中center
+        valign调整垂直位置，靠上top靠下bottom居中middle
+         -->
+    <thead height="50" align="center" valign="middle">
+        <th>姓名</th>
+        <th>性别</th>
+        <th>年龄</th>
+        <th>民族</th>
+        <th>政治面貌</th>
+    </thead>
+    <!-- 主体 -->
+     <!-- table里会规定height的至少长度，如果tbody里的长度没达到就不会更改 -->
+    <tbody height="" align="center" valign="middle">
+        <!-- tr属性与thead相同 -->
+        <tr>
+            <!-- td修改后其他单元格也会随之修改 -->
+            <td width="70" height="70" align="center" valign="middle">张三</td>
+            <td>男</td>
+            <td>18</td>
+            <td>汉族</td>
+            <td>团员</td>
+        </tr>
+        <tr>
+            <td>李四</td>
+            <td>女</td>
+            <td>20</td>
+            <td>满族</td>
+            <td>群众</td>
+        </tr>
+        <tr>
+            <td>王五</td>
+            <td>男</td>
+            <td>21</td>
+            <td>回族</td>
+            <td>党员</td>
+        </tr>
+        <tr>
+            <td>赵六</td>
+            <td>女</td>
+            <td>21</td>
+            <td>壮族</td>
+            <td>群众</td>
+        </tr>
+    </tbody>
+    <!-- 脚注 -->
+    <tfoot height="50">
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>总计：4人</td>
+    </tfoot>
+</body>
+</html>

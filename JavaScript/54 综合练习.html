@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let arr = []
+    for (let i = 0;i <= 4;i++){
+      let age = +prompt('请输入年龄1-100')
+      if (age >= 1 && age <= 100){
+        arr.unshift(age)
+      } else{
+        alert('你输入的年龄无效')
+      }
+    }
+    let arr18 = []   /* 成年人 */
+    let sum = 0   /* 总年龄 */
+    let avg   /* 平均年龄 */
+    for (i = 0;i < arr.length;i++){
+      if(arr[i] >= 18){
+        arr18.unshift(arr[i])
+      }
+      sum += arr[i]
+    }
+    avg = sum / arr.length
+    document.write(`成年人的年龄有${arr18}<br>总年龄为${sum}<br>平均年龄为${avg}`)
+    let max = arr[0]
+    let min = arr[0]   /* 最大最小年龄 */
+    for (let j = 1;j <= arr.length;j++){
+      if (arr [j] > arr [0]){
+        max = arr[j]
+      } else if (arr [j] < arr [0]){
+        min = arr[j]
+      }
+    }
+    document.write(`<br>最大值为${max},最小值为${min}`)
+  </script>
+</body>
+</html>

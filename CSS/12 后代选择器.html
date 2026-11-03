@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>后代选择器</title>
+    <style>
+    p span{   /* 后代选择器 */
+        color: red;
+    }
+    span{
+        color: blue;
+    }
+    p>b{   /* 子选择器 */
+        color: yellow;
+    }
+    </style>
+</head>
+<body>
+    <!-- 后代选择器：对三层及以上的嵌套也生效 -->
+    <p>嵌套外<span>嵌套内（红色）</span></p>
+    <span>未嵌套（蓝色）</span>
+    <!-- 子选择器：只对直接后代生效 -->
+    <p>第一层p<b>第二层b</b></p>
+    <p>第一层p<span>第二层span<b>第三层b</b></span></p>
+</body>
+</html>

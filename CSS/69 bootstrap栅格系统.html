@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>栅格系统</title>
+    <style>
+        .container{
+            width: 100%;
+            max-width: 1140px;
+            margin: auto;
+        }
+        .container .row>.col{   /* 子元素选择器 */
+            padding: 0.75rem;
+            background-color: aliceblue;
+            border: 1px solid gray;
+        }
+        .container .row+.row{   /* 相邻兄弟选择器 */
+            margin-top: 1rem;
+        }
+        .row{
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        .col{
+            flex: 1 0 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">二等分</div>
+            <div class="col">二等分</div>
+        </div>
+        <div class="row">
+            <div class="col">三等分</div>
+            <div class="col">三等分</div>
+            <div class="col">三等分</div>
+        </div>
+    </div>
+</body>
+</html>

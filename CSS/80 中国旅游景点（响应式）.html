@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>中国旅游景点</title>
+    <style>
+        h1{
+            text-align: center;
+        }
+        p{
+            color: rgb(154, 154, 154);
+            max-height: 4.5em;
+            line-height: 1.5;
+            overflow: hidden;
+            position: relative;
+        }
+        p::after{
+            content: "...";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: #fefdfd;
+            padding-left: 4px;
+            padding-right: 5px;
+        }
+        img{
+            width: 100%;
+            height: 200px;
+        }
+        .container{
+            display: grid;
+            grid-template-rows: auto auto 1fr;
+            grid-template-columns: repeat(4,24%);
+            column-gap: 15px;
+            height: 400px;
+        }
+        .s1{
+            border: 1px dotted gray;
+        }
+        .s2{
+            border: 1px dotted gray;
+        }
+        .s3{
+            border: 1px dotted gray;
+        }
+        .s4{
+            border: 1px dotted gray;
+        }
+        @media(max-width:1024px){
+            .container{
+            display: grid;
+            grid-template-rows: auto;
+            grid-template-columns: repeat(3,32%);
+            column-gap: 15px;
+            height: 400px;
+        } 
+        }
+        @media(max-width:768px){
+            .container{
+            display: grid;
+            grid-template-rows: auto auto 1fr;
+            grid-template-columns: repeat(2,48%);
+            column-gap: 15px;
+            height: 400px;
+        } 
+        }
+        @media(max-width:576px){
+            .container{
+            display: grid;
+            grid-template-rows: auto;
+            grid-template-columns: 96%;
+            column-gap: 15px;
+            height: 400px;
+        } 
+        }
+    </style>
+</head>
+<body>
+    <h1>中国旅游景点</h1>
+    <div class="container">
+        <div class="s1">
+            <img src="../html/content1/后海.webp" alt="">
+            <h2>后海</h2>
+            <p>说是“海”，其实是一个巨大的人工湖，是旧时皇家独享的一泓清池。后海地处北京市中心，距天安门仅有四、五站地，与著名的北海一水相连，与景山、故宫遥遥相对。沿海走着走着，一不留神就会看到碧瓦红墙。在那些高大庄严的大门外，只能看到院内高大森郁的树木。幽幽的透着神秘。据说，后海的水域连着故宫的龙脉，从古到现代都是风水宝地。所以，历代的高僧们在这里修建寺庙，而王公大臣们则在岸边选址筑府造园，名人们也纷纷迁居湖畔，开始了后海边上最初的水岸生活。因此，俗语说，“先有什刹海，后有北京城”。</p>
+        </div>
+        <div class="s2">
+            <img src="../html/content1/南锣鼓巷.webp" alt="">
+            <h2>南锣鼓巷</h2>
+            <p>南锣鼓巷是一条具有深厚历史文化底蕴的名巷，也是北京最古老的街区之一，仍然完整保留着元代胡同院落的独特肌理，是中国规模最大、品级最高且资源最为丰富的传统棋盘式民居区域。南锣鼓巷东西两面共有16条胡同整齐排列，呈鱼骨状，俯瞰整个街区犹如蜈蚣，又称蜈蚣街。南锣鼓巷的形成可追溯至元朝大都城的兴建时期。在清代的乾隆年间，此地为镶黄旗的驻扎地；而到了光绪末年至宣统年间，又被划归为内左三区；进入民国时期，则变成了内五区的一部分。南锣鼓巷曾经汇聚了众多高官显要与文化名流，不仅完好保存了众多历史悠久的胡同与青砖灰瓦的四合院，还因名人故居而沉积了深厚的人文历史底蕴。</p>
+        </div>
+        <div class="s3">
+            <img src="../html/content1/北海公园.webp" alt="">
+            <h2>北海公园</h2>
+            <p>北海公园位于北京的中心地区，故宫西北部，东靠景山，南临中南海，北接什刹海 ，北海公园占地总面积68.2万平方米，其中水面积38.9万平方米，陆地面积29.3万平方米。是中国现存历史上建园最早、保存最完整、文化沉积最深厚的古典皇家园林，国家AAAA级旅游景区。</p>
+        </div>
+        <div class="s4">
+            <img src="../html/content1/北海园博园.webp" alt="">
+            <h2>北海园博园</h2>
+            <p>北海园博园以“花海丝路·绿映珠城”为主题，项目位于广西北海市南珠大道以东、银滩大道以北，是2014年第四届广西园博会的举办地，是城市绿心的核心组成部分，包括一主两副三个园区，总用地面积约298公顷，属城市规划绿地。园博会规划建设室外展园（包括广西设区市城市园林展园、东盟十国园林展园、优秀园林大师展园、企业盈利展园等）、室内展园（园林规划作品、植物新品种、花卉、盆景、插花、书画摄影、赏石等展览）及各类园林园艺相关活动。</p>
+    </div>
+</div>
+</body>
+</html>

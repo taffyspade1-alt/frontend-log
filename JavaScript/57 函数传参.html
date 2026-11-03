@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // function 函数名(参数列表){
+    //   函数体
+    // }
+    let sum = 0
+    function getSum(start,end){
+      // 形参 形式上的参数
+      let sum = 0
+      for (let i = start;i <= end;i++){
+        sum += i
+      }
+      document.write(sum)
+    }
+    getSum(100,101)   /* start = 100,end = 101 */
+    // 调用的小括号里面：实参 实际的参数
+  </script>
+</body>
+</html>

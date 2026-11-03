@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <a href="www.baidu.com">百度一下</a>
+  <script>
+    const a = document.querySelector('a')
+    a.addEventListener('click',function(e){
+      e.preventDefault()    /* 阻止跳转 */
+    })
+  </script>
+</body>
+</html>

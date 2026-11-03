@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>表单</title>
+    <style>
+        form{
+            border: 1px dotted #AAAAAA;
+            padding: 1px 6px 1px 6px;
+            margin: 0px;
+            font: 14px Arial;
+        }
+        input{   /* 所有input标记 */
+            color: #00008B;
+        }
+        input.txt{   /* 文本输入框单独设置 */
+            border: 1px inset #00008B;
+            background-color: #ADD8E6;
+        }
+        input.btn{   /* 按钮单独设置 */
+            color: #00008B;
+            background-color: #ADD8E6;
+            border: 1px outset #00008B;
+            padding: 1px 2px 1px 2px;
+        }
+        select{
+            width: 80px;
+            color: #00008B;
+            background-color: #ADD8E6;
+            border: 1px solid #00008B;
+        }
+        textarea{
+            width: 200px;
+            height: 40px;
+            color: #00008B;
+            background-color: #ADD8E6;
+            border: 1px solid #00008b;
+        }
+    </style>
+</head>
+<body>
+    <form action="">
+        <!-- 文本输入框 -->
+        <p>姓名：<input type="text" name="name"size="10" class="txt"></p>
+        <!-- 单选按钮 -->
+        <p>
+            性别：
+            <input type="radio" name="gender" value="radio" checked>男
+            <input type="radio" name="gender" value="radio"> 女
+            <!-- 一组的按钮设置为同样的name -->
+        </p>
+        <!-- 多选按钮 -->
+        <p>你喜欢什么
+            <input type="checkbox" name="interest">看书
+            <input type="checkbox" name="interest">上网
+            <input type="checkbox" name="interest">睡觉
+        </p>
+        <!-- 密码输入框 -->
+        <p>密码
+            <input type="password" class="txt">
+        </p>
+        <!-- 按钮 -->
+        <p>
+            <input type="submit" value="提交" class="btn"> <input type="reset" value="重置" class="btn">
+        </p>
+        <!-- 多行文本框 -->
+         <p>我要留言：<br>
+            <textarea name="textarea" id="textarea" cols="45" rows="5"></textarea>
+         </p>
+         <!-- 下拉列表框 -->
+          <p>
+            选择你最喜欢的颜色
+            <select name="select" id="select">
+                <option value="1">红</option>
+                <option value="2">黄</option>
+                <option value="3">蓝</option>
+                <option value="4">绿</option>
+                <option value="5">紫</option>
+            </select>
+          </p>
+    </form>
+</body>
+</html>

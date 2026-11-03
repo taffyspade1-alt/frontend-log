@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>属性选择器</title>
+    <style>
+        p[data-description]{   /* 属性存在选择器 */
+            /* background-color: gray; */
+        }
+        /* 功能：选中含方括号指定属性的元素 */
+        p[data-description="first paragraph"]{   /* 属性等于选择器 */
+            /* background-color: gray; */
+        }
+        /* 功能：选中存在该属性且该属性值为=后面的元素 */
+        /* 若=后面的属性值存在空格，需要用 ""引起来，否则引号可以省略 */
+        p[data-description*=fir]{   /* 属性包含选择器 */
+            background-color: gray;
+        }
+        /* 功能：选中存在该属性且包含*=后面的属性的元素 */
+    </style>
+</head>
+<body>
+    <h1>如何构建一个网页</h1>
+    <div class="outer">
+        <div class="inner">
+            <p data-description="first paragraph">1.自从互联网走进千家万户，人们已经离不开它</p>
+        </div>
+            <p data-description="second paragraph">2.构建一个网站需要进行大量的工作，建议先从简单的工作开始</p>
+    </div>
+    <p data-description="third paragraph">3.首先需要学习一些关于html的基础知识</p>
+    <p>4.然后再学习一些CSS的知识</p>
+</body>
+</html>

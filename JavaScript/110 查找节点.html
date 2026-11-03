@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="dad">
+    <div class="son"></div>
+  </div>
+  <ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+  </ul>
+  <script>
+    // 查找父节点：子元素.parentNode
+    const son = document.querySelector('.son')
+    console.log(son.parentNode)
+    // 查找子节点：父元素.children
+    const ul = document.querySelector('ul')
+    console.log(ul.children)
+    // 查找兄弟节点:下一个兄弟nextElementSibling 上一个兄弟previousElementSibling
+    const li2 = document.querySelector('ul li:nth-child(2)')
+    console.log(li2.previousElementSibling)
+    console.log(li2.nextElementSibling)
+  </script>
+</body>
+</html>

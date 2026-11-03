@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>圆角</title>
+    <style>
+        .round{
+            border-radius: 20px;   /* 统一设置四个圆角半径 */
+            border-top-right-radius: 40px;   /* 单独设置右上角圆角半径 */
+            /* 4个值：左上 右上 右下 左下 */
+            background-color: skyblue;
+            padding: 20px;
+            width: 300px;
+            height: 100px;
+        }
+        .tround{   /* 用圆角制作椭圆 */
+            border-radius: 150px/50px;   /* 水平方向半径150 竖直方向半径50 */
+            background-color: aqua;
+            width: 300px;
+            height: 100px;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="round"></div>
+    <div class="tround"></div>
+</body>
+</html>

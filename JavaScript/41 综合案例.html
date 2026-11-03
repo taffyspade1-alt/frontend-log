@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    while (1){
+      let str = prompt('请选择+ - * /，按q退出程序')
+      if (str === 'q'){
+        break
+      } else if (str === '+'){
+        let num1 = +prompt('请输入第一个数')
+        let num2 = +prompt('请输入第二个数')
+        alert(`结果为${num1 + num2}`)
+      } else if (str === '-'){
+        let num1 = +prompt('请输入第一个数')
+        let num2 = +prompt('请输入第二个数')
+        alert(`结果为${num1 - num2}`)
+      } else if (str === '*'){
+        let num1 = +prompt('请输入第一个数')
+        let num2 = +prompt('请输入第二个数')
+        alert(`结果为${num1 * num2}`)
+      } else if (str === '/'){
+        let num1 = +prompt('请输入第一个数')
+        let num2 = +prompt('请输入第二个数')
+        alert(`结果为${num1 / num2}`)
+      } else{
+        alert('操作不正确')
+      }
+    }
+  </script>
+</body>
+</html>

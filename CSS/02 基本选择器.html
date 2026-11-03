@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>基本选择器</title>
+    <!-- 标记选择器：声明页面所有相同标记的样式 -->
+    <style>
+        h1{
+            color: red;
+            font-size: 25px;
+        }
+    </style>
+    <!-- 类别选择器：自定义某个或某些标签的属性，可以配合标记选择器使用 -->
+    <style type="text/css">
+        p{
+            color: blue;
+            font-size: 18px;
+        }
+        .special{
+            color: red;
+            font-size: 23px;
+        }
+    </style>
+</head>
+<body>
+    <h1>标题</h1>
+    
+    <p>内容文本1</p>
+    <p>内容文本2</p>
+    <p class="special">内容文本3</p>
+    <p>内容文本4</p>
+</body>
+</html>

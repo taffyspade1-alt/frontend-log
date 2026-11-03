@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 增 setItem('键','值')
+    localStorage.setItem('uname','pink')
+    // 查
+    console.log(localStorage.getItem('uname'))
+    // 改 setItem 有键时为改，没有键时为查
+    localStorage.setItem('uname','red')
+    // 删
+    localStorage.removeItem('uname')
+    // 本地存储只能存储字符串类型
+  </script>
+</body>
+</html>

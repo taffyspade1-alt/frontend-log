@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    Math.random()   /* 0-1包含0不包含1的随机小数 */
+    // 0-10随机数
+    Math.floor(Math.random() * 11)
+    // n-m随机数
+    Math.floor(Math.random() * (m - n + 1) + n)
+    // 取n-m的随机整数
+    function getRandom(n,m){
+      return Math.floor(Math.random() * (m - n + 1) + n)
+    }
+  </script>
+</body>
+</html>

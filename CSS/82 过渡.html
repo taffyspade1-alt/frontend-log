@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>过渡</title>
+    <style>
+        body{
+            color: #fff;
+        }
+        .box{
+            background: green;
+            border-radius: 6px;
+            cursor: pointer;
+            height: 95px;
+            width: 95px;
+            line-height: 95px;
+            text-align: center;
+            transition: background 0.2s linear,border-radius 1s ease-in 1s;
+            /* transition-property 规定应用过渡的CSS属性名称*/
+            /* transition-duration 定义过渡效果花费的时间，默认值0 */
+            /* transition-timing-function 定义过渡效果的速度曲线，默认值ease linear：匀速变化 ease：先加速和后减速 
+            ease-in开始时缓慢，过渡过程中加速 ease-out：开始时快速，过程中减速 ease-in-out：开始时缓慢，中间加速，结束前减速*/
+            /* transition-delay 定义开始过渡的延迟时间，默认值0 */
+        }
+        .box:hover{
+            background-color: red;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">圆角</div>
+</body>
+</html>

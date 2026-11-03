@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>收货人信息</title>
+    <style>
+        .long{
+            width: 320px;
+            height: 25px;
+            border: 1px solid black;
+        }
+        .long:focus{
+            /* 焦点时的蓝色边框（可自定义蓝色值，比如 #007bff 是常用的主题蓝） */
+            border: 2px solid #007bff;
+            outline: none;     /* 去掉浏览器默认的外轮廓（避免和自定义边框冲突） */
+        }
+        .l2{
+            outline: none;
+        }
+        .l2:focus{
+            border: 2px solid #007bff;
+        }
+        h4{
+            margin-bottom:8px ;
+        }
+        button{
+            width: 48px;
+            height: 30px;
+            color: white;
+            background-color: skyblue;
+            border: none;
+            font-size: 12px;
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <h4>收货人<br><input type="text" class="long"></h4>
+    <h4>手机号码<br><input type="text" class="long"></h4>
+    <h4>所在地区<br><input type="text" class="long"></h4>
+    <h4>详细地址<br><textarea name="textarea" id="textarea" cols="45" rows="5" class="l2"></textarea></h4>
+    <h4>
+        标签<br><input type="radio" name="gender" value="radio">家
+        <input type="radio" name="gender" value="radio">公司
+        <input type="radio" name="gender" value="radio">学校
+    </h4>
+    <h4>设为默认地址<input type="checkbox"></h4>
+    <p><button>提交</button></p>
+</body>
+</html>

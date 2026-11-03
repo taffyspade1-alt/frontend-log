@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const date = new Date()
+    let y = date.getFullYear()
+    let m = date.getMonth() + 1
+    let d = date.getDate()
+    let h = date.getHours()
+    let min = date.getMinutes()
+    let s = date.getSeconds()
+    // 补0 
+    h = h < 10 ? '0' + h : h
+    min = min < 10 ? '0' + min : min
+    s = s < 10 ? '0' + s : s
+    document.write(`${y}-${m}-${d},${h}:${min}:${s}`)
+    document.write(date.toLocaleString())   /* 年/月/日 时:分:秒 */
+  </script>
+</body>
+</html>

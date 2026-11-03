@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>计算器</title>
+    <style>
+        html{
+            font-size: 62.5%;
+            box-sizing: border-box;   /* 让width和height计算时包括padding和border */
+        }
+        body{
+            display: grid;
+            height: 100vh;
+            place-items: center;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: inherit;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .calculator{
+            width: 400px;
+            border: 1px solid #333;
+            border-radius: 10px;
+        }
+        .calculator-screen{
+            width: 100%;
+            font-size: 4.8rem;    /* em：根元素font-size的倍数值 */
+            height: 70px;
+            border: none;
+            background-color: #252525;
+            color: #fff;
+            text-align: right;
+            padding-right: 20px;
+            padding-left: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .calculator-keys{
+            display: grid;
+            grid-template-columns: repeat(5,1fr);
+            grid-template-rows: repeat(5,1fr);
+            gap: 30px;
+            padding: 20px;
+            grid-template-areas: 
+            "a1 a1 a2 a3 a4"
+            "b1 b2 b3 b4 b5"
+            "c1 c2 c3 c4 c5"
+            "d1 d2 d3 d4 d4"
+            "e1 e1 e2 d4 d4";
+        }
+        button{
+            height: 60px;
+            background-color: #ccc;
+            border-radius: 20px;
+            border: 1px solid #bbb;
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #333;
+        }
+        button:focus{   /* 设置获取焦点的样式 */
+            outline: none;
+        }
+        .four{
+            font-size: 3rem;
+        }
+        button:hover{
+            background-color: #eaeaea;
+        }
+        .operator{
+            background-color: #F79F31;
+            border-color: #e79f31;
+            border-color: #E88409;
+            color: #fff;
+        }
+        .operator:hover{
+            background-color: #F9B866;
+        }
+        .all-clear{
+            background-color: #2E86C0;
+            border-color: #337cac;
+            color: #fff;
+            grid-area: a1;
+        }
+        .all-clear:hover{
+            background-color: #4e9ed4;
+        }
+        .zero{
+            grid-area: e1;
+        }
+        .equal-sign{
+            grid-area: d4;
+            height: 100%;   /* 让元素填满网格区域 */
+        }
+        .negative{
+            grid-area: a2;
+        }
+        .plus{
+            grid-area: c4;
+        }
+        .minus{
+            grid-area: c5;
+        }
+        .multiply{
+            grid-area: b5;
+        }
+        .divide{
+            grid-area: b4;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <!-- 显示计算结果 -->
+         <input type="text" class="calculator-screen" value="0">
+         <!-- 各种操作按钮 -->
+          <div class="calculator-keys">
+          <button type="button" class="all-clear">AC</button>
+
+          <button type="button" class="operator negative" value="neagtive">±</button>
+          <button type="button" class="operator" value="(">(</button>
+          <button type="button" class="operator" value=")">)</button>
+          <button type="button" class="operator four plus" value="+">+</button>
+          <button type="button" class="operator four minus" value="-">-</button>
+          <button type="button" class="operator four multiply" value="*">×</button>
+          <button type="button" class="operator four divide" value="/">÷</button>
+
+          <button type="button" value="7">7</button>
+          <button type="button" value="8">8</button>
+          <button type="button" value="9">9</button>
+          <button type="button" value="4">4</button>
+          <button type="button" value="5">5</button>
+          <button type="button" value="6">6</button>
+          <button type="button" value="1">1</button>
+          <button type="button" value="2">2</button>
+          <button type="button" value="3">3</button>
+          <button type="button" class="zero" value="0">0</button>
+          <button type="button" class="decimal" value=".">.</button>
+          <button type="button" class="equal-sign operator" value="=">=</button>
+    </div>
+</div>
+</body>
+</html>

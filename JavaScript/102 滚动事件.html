@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      height: 3000px;
+    }
+    div{
+      width: 200px;
+      height: 200px;
+      margin: 200px;
+      overflow: scroll;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    我是很长的文字
+    我是很长的文字
+    我是很长的文字
+    我是很长的文字
+    我是很长的文字
+    我是很长的文字
+    我是很长的文字
+    我是很长的文字
+    我是很长的文字
+    我是很长的文字
+    我是很长的文字
+    我是很长的文字
+    我是很长的文字
+    我是很长的文字
+    我是很长的文字
+  </div>
+  <script>
+    const div = document.querySelector('div')
+    // window.addEventListener('scroll',function(){
+    //   console.log(document.documentElement.scrollTop)
+    // })
+    window.addEventListener('scroll',function(){
+      // scrollTop被卷去的头部
+      let d = document.documentElement.scrollTop
+      if(d >= 100){
+        div.style.display = 'block'
+      }else{
+        div.style.display = 'none'
+      }
+    })
+  </script>
+</body>
+</html>

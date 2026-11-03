@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let arr = ['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f']
+    let str = '#'
+    function getRandomColor(condition = true){
+      if (condition){   /* 如果是true，返回#ffffff */
+        for(let i = 1;i <= 6;i++){
+        let random = Math.floor(Math.random() * arr.length)   /* 得到数组索引号 */
+        str += arr[random]
+        }
+        return str
+      } else{   /* 如果是false，返回rgb(255,255,255) */
+        let r = Math.floor(Math.random() * 256)
+        let g = Math.floor(Math.random() * 256)
+        let b = Math.floor(Math.random() * 256)
+        return `rgb(${r},${g},${b})`
+      }
+    }
+    console.log(getRandomColor(true))
+    console.log(getRandomColor(false))
+  </script>
+</body>
+</html>

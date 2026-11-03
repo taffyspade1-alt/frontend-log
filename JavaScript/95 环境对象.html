@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button>按钮</button>
+  <script>
+    const btn = document.querySelector('button')
+    btn.addEventListener('click',function(){
+      // 环境对象this：谁调用就指向谁
+      this.style.color = 'red'
+    })
+  </script>
+</body>
+</html>

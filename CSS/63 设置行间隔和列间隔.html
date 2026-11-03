@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>设置行间隔和列间隔</title>
+    <style>
+        .container{
+            display: grid;
+            grid-template-rows: repeat(3,80px);
+            grid-template-columns: repeat(3,1fr);
+            row-gap: 10px;   /* 行间隔 */
+            column-gap: 15px;   /* 列间隔 */
+            width: 300px;
+            border: 1px solid #000;   
+        }
+        .container .item{
+            width: 50px;
+            height: 40px;
+            margin: 5px;
+            background: tomato;
+            line-height: 40px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5em;
+            text-align: center;   
+        }
+    </style>
+</head>
+<body class="container">
+    <div class="item item1">1</div>
+    <div class="item item2">2</div>
+    <div class="item item3">3</div>
+    <div class="item item4">4</div>
+    <div class="item item5">5</div>
+    <div class="item item6">6</div>
+    <div class="item item7">7</div>
+</body>
+</html>

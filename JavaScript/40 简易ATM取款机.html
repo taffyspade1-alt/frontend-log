@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ATM取款机</title>
+</head>
+<body>
+  <script>
+    let bal = 100
+    while (1){
+      let op = +prompt('请输入数字，1存钱 2取钱 3查看余额 4退出功能')
+      if(op === 1){
+        let bal1 = +prompt('请输入存取金额')
+        bal += bal1
+        continue
+      } else if (op ===2){
+        let bal2 = +prompt('请输入取出金额')
+        bal -= bal2
+        continue
+      } else if (op === 3){
+        alert(`你的余额是${bal}`)
+        continue
+      } else if (op === 4){
+        break
+      } else {
+        alert('操作不正确')
+      }
+    }
+  </script>
+</body>
+</html>

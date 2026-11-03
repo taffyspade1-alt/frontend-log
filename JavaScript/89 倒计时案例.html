@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button disabled>我已阅读用户协议(5)</button>
+  <script>
+    let s = 5
+    function fn(){
+      s--
+      btn.innerHTML = `我已阅读用户协议(${s})`
+      if(s === 0){
+      clearInterval(n)
+      btn.innerHTML = '我同意'
+      btn.disabled = false
+      }
+    }
+    let n = setInterval(fn,1000)
+    const btn = document.querySelector('button')
+  </script>
+</body>
+</html>

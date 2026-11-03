@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let arr = ['pink','red','green']
+    for (let k in arr){
+      console.log(k)    /* 数组的索引号(字符串) */
+      console.log(arr[k])
+    }   
+    // for in遍历对象 
+    let obj = {
+      uname: 'pink',
+      age: 18,
+      gender: '男'
+    }
+    for (let k in obj){
+      console.log(k)    /* 属性名 'uname' 'age' */
+      console.log(obj[k])   /* 输出属性值 */
+    }
+  </script>
+</body>
+</html>

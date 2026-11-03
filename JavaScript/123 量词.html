@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // *大于等于0次
+    console.log(/^哈*$/.test('哈哈哈哈哈哈'))
+    // +大于等于1次
+    console.log(/^哈+$/.test('哈哈'))
+    // ?0或1次
+    console.log(/^哈?$/.test(''))
+    // {n},n为几就必须出现几次
+    console.log(/^哈{2}$/.test('哈'))
+    // {n,}大于等于n次
+    // {n,m}大于等于n小于等于m
+  </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text">
+  <script>
+    const reg = /^[a-zA-Z0-9- _]{6,16}$/
+    const input = document.querySelector('input')
+    input.addEventListener('blur',function(){
+      if(reg.test(input.value)){
+        alert('输入正确')
+      }else{
+        alert('请输入6-16位字符')
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 对象解构，变量名必须和属性名一致
+    const user = { uname: 'pink', age: 18 }
+    const { uname, age } = user
+    console.log(uname, age)
+
+    // 对象解构-变量重命名
+    const { uname: username, age: userAge } = user
+    console.log(username, userAge)
+
+    // 解构数组对象
+    const users = [{ uname: 'red', age: 20 }]
+    const [{ uname: firstName }] = users
+    console.log(firstName)
+
+    // 多级对象解构
+    const person = {
+      name: 'pink',
+      family: {
+        mother: 'mama',
+        father: 'baba'
+      }
+    }
+    const { family: { mother, father } } = person
+    console.log(mother, father)
+  </script>
+</body>
+</html>

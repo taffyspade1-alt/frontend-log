@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>嵌套盒子之间的外边距</title>
+    <style>
+        div.father{
+            background-color: skyblue;
+            text-align: center;
+            padding: 10px;
+            border: 2px solid black;
+        }
+        div.son{
+            background-color: gray;
+            margin-top: 30px;
+            margin-bottom: 0px;
+            padding: 15px;
+            border: 2px dashed red;
+        }
+        /* 外层盒子的宽度自动延伸直至浏览器窗口的边界 */
+        /* 子div的宽度自动延伸至父div的边界 */
+    </style>
+</head>
+<body>
+    <div class="father">
+        <div class="son">子div</div>
+    </div>
+</body>
+</html>

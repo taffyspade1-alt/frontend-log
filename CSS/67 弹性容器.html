@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>导航</title>
+    <style>
+        ul{
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .nav{
+            padding-left: 20px;
+            padding-right: 40px;
+            background: #343a40;
+            display: flex;   /* 设置弹性容器 */
+            flex-direction: row;   /* 主轴方向设置为水平 */
+        }
+        .nav a{
+            text-decoration: none;
+            display: block;
+            padding: 1em;
+            color: #fff;
+        }
+        .nav .login{
+            margin-left: auto;   /* 左外边距为剩余空间 */
+        }
+        .nav a:hover{
+            background: #1565C0;
+        }
+        @media all and (max-width:600px){   /* 浏览器的宽度小于等于600px时应用词css规则 */
+            .nav{
+                flex-direction: column;   /* 主轴方向为竖直 */
+                padding: 0;
+            }
+            .nav .login{
+                margin-left: unset;
+            }
+            .nav a{
+                text-align: center;
+                padding: 10px;
+                border-top: 1px solid gray;
+                border-bottom: gainsboro;
+            }
+        }
+    </style>
+</head>
+<body>
+    <ul class="nav">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">图书</a></li>
+        <li><a href="#">资源</a></li>
+        <li><a href="#">联系我们</a></li>
+        <li class="login"><a href="#">登录/注册</a></li>
+    </ul>
+</body>
+</html>

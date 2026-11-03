@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动画</title>
+    <style>
+        @keyframes slide{   /* 定义动画 */
+            0%{
+                left: 0;
+                top: 0;
+            }
+            50%{
+                left: 244px;
+                top: 100px;
+            }
+            100%{
+                left: 488px;
+                top: 0;
+            }
+        }
+        .stage{
+            background-color: #eaeaed;
+            border-radius: 6px;
+            height: 150px;
+            position: relative;
+            width: 538px;
+        }
+        .stage:hover .ball{
+            animation-name: slide;
+            animation-duration: 2s;
+            animation-timing-function: ease-in-out;
+            animation-delay: 0.5s;
+            animation-iteration-count: infinite;   /* 定义动画播放次数，默认值1 infinite：循环播放*/
+            animation-direction: alternate;   /* 定义动画是否在下一个周期逆向播放，默认值normal normal：正常播放 reverse：反方向播放 
+            alternate：先按normal播放一次然后按reverse播放一次 alternate-reverse：先按reverse播放一次再按normal播放一次*/
+        }
+        .ball{
+            background-color: #2db34a;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div class="stage">
+        <div class="ball"></div>
+    </div>
+</body>
+</html>

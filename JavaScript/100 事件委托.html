@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <ul>
+    <li>第1个孩子</li>
+    <li>第2个孩子</li>
+    <li>第3个孩子</li>
+    <p>不需要变色</p>
+  </ul>
+  <script>
+  const ul = document.querySelector('ul')
+  ul.addEventListener('click',function(e){
+    // target选中点击的目标
+    if(e.target.tagName === 'LI'){   /* 只有点击li才触发 */
+    e.target.style.color = 'red'
+    }
+  })
+  </script>
+</body>
+</html>

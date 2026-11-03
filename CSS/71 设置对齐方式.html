@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>对齐</title>
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+        }
+        .container{
+            display: flex;
+            flex-direction: row;
+            background-color: #F89427;
+            height: 100vh;
+            width: 100%;
+            justify-content: center;
+            /* 5个属性 flex-start:默认值，靠主轴的起点对齐 flex-end:靠着主轴的终点对齐
+            center:沿主轴的居中位置对齐 space-between:沿主轴的两端对齐并占满主轴 space-around:每个弹性项两侧的间隔相等 */
+            align-items: center;
+            /* flex-start:靠着交叉轴的起点对齐 flex-end:靠着交叉轴的终点对齐 center:沿交叉轴的中点对齐
+            baseline:沿弹性项第一行文字的基线对齐 stretch:默认值，如果项目未设置高度则占满整个容器高度 */
+        }
+        .item{
+            border: 0.5px solid #3a3a3a;
+        }
+    </style>
+</head>
+<body class="container">
+    <div class="item">水平垂直居中</div>
+</body>
+</html>

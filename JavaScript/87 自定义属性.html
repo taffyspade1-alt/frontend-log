@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div data-id="1" data-spm="不知道">1</div>
+  <div data-id="2">2</div>
+  <div data-id="3">3</div>
+  <div data-id="4">4</div>
+  <div data-id="5">5</div>
+  <script>
+    const div = document.querySelector('div')
+    console.log(div.dataset)    /* 获取全部的自定义属性 */
+    console.log(div.dataset.id)   /* 获取id */
+  </script>
+</body>
+</html>

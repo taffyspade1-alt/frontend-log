@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .container{
+            display: flow-root;   /* 清除浮动 */
+            color: #fff;
+            background: #eaeaed;
+            width: 100%;   /* 父容器随窗口宽度变化 */
+            border: 1px solid tomato;
+        }
+        main,aside{
+            background: tomato;
+            padding: 20px 0;
+            /* margin: 10px; */
+            margin: 0.83333%;
+            text-align: center;
+            float: left;
+        }
+        main{
+            /* width: 800px; */
+            width: 66.66667%;
+        }
+        aside{
+            /* width: 360px; */
+            width: 30%;
+        }
+    </style>
+    <title>弹性布局</title>
+</head>
+<body>
+    <div class="container">
+        <main>内容区</main>
+        <aside>侧边栏</aside>
+    </div>
+</body>
+</html>

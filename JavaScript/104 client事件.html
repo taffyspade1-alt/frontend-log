@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      height: 2000px;
+    }
+    div{
+      display: inline-block;
+      width: 200px;
+      height: 200px;
+      padding: 10px;
+      border: 1px solid black;
+      background-color: skyblue;
+    }
+  </style>
+</head>
+<body>
+  <div></div>
+  <script>
+    const div = document.querySelector('div')
+    // clientWidth和clientHeight 不包含边框的盒子宽高
+    console.log(div.clientWidth)
+  </script>
+</body>
+</html>

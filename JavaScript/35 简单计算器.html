@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let num1 = +prompt('请输入数字1')
+    let num2 = +prompt('请输入数字2')
+    let str = prompt('请输入运算符')
+    switch (str){
+      case '+':
+        alert(`两个数做加法结果是${num1 + num2}`)
+        break
+      case '-':
+        alert(`两个数做减法结果是${num1 - num2}`)
+        break
+      case '*':
+        alert(`两个数做乘法结果是${num1 * num2}`)
+        break
+      case '/':
+        alert(`两个数做除法结果是${num1 / num2}`)
+      default:
+      alert(`请输入+ - * /中的一个符号`)
+    }
+  </script>
+</body>
+</html>

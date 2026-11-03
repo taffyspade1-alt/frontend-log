@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 有就符合
+    console.log(/哈/.test('是的是的哈'))
+    // ^开头符合
+    console.log(/^哈/.test('哈哈'))
+    // $结尾符合
+    console.log(/哈$/.test('二哈'))
+    // ^$精准匹配
+    console.log(/^哈$/test('哈'))
+  </script>
+</body>
+</html>

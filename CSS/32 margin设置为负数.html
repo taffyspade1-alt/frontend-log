@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>行内元素之间的水平外边距</title>
+    <style>
+        span{
+            background-color: skyblue;
+            text-align: center;
+            font-size: 12px;
+            padding: 10px;
+        }
+        span.left{
+            margin-right: 30px;
+            background-color: purple;
+        }
+        span.right{
+            margin-left: -50px;
+            background-color: aqua;
+        } 
+        /* 右块移动到左块上形成重叠 */
+    </style>
+</head>
+<body>
+    <span class="left">行内元素1</span><span class="right">行内元素2</span>
+</body>
+</html>

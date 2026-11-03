@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>absolute属性</title>
+    <style>
+        body{
+            margin: 20px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+        }
+        #father{
+            background-color: #a0c8ff;
+            border: 1px dashed black;
+            padding: 15px;
+            position: relative;
+        }
+        #father div{
+            background-color: #fff0ac;
+            border: 1px dashed black;
+            padding: 10px;
+        }
+        #block2{
+            position: absolute;   /* 绝对定位 */
+            /* 绝对定位规则：
+            1.使用绝对定位的盒子以它最近的一个已经定位的祖先元素为基准进行偏移，没有设置时将会以浏览器窗口为基准偏移
+            2.绝对定位的框从标准流中脱离(不设置偏移属性也会脱离标准流)，这意味着他们对其后的兄弟盒子的定位没有影响 */
+            top: 30px;
+            right: 30px;
+        }
+        /* 固定定位fixed：脱离标准流，基准基于浏览器窗口，用于将某个元素永久显示于浏览器窗口的固定位置 */
+    </style>
+</head>
+<body>
+    <div id="father">
+        <div>Box-1</div>
+        <div id="block2">Box-2</div>
+        <div>Box-3</div>
+    </div>
+</body>
+</html>

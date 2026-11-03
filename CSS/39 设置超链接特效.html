@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>设置超链接特效</title>
+    <style>
+        a{
+            font-size: 14px;
+        }
+        a:link{   /* 超链接正常状态的样式 */
+            color: red;
+            text-decoration: none;   /* 无下划线 */
+        }
+        a:visited{    /* 超链接被点击过的样式 */
+            color: black;
+            text-decoration: none;
+        }
+        a:hover{   /* 鼠标经过时的超链接 */
+            color: yellow;
+            text-decoration: underline;   /* 下划线 */
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <a href="https://www.bilibili.com/" target="_blank">  去哔哩哔哩</a>
+    <a href="https://www.baidu.com/" target="_blank">  去百度</a>
+    <a href="../html/10 排版.html" target="_blank">去排版</a>
+</body>
+</html>

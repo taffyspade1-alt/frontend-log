@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>用网格实现经典三列布局</title>
+    <style>
+        .container{
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            grid-template-columns: auto 1fr auto;
+            grid-template-areas: 
+            "header header header"
+            "1-sidebar main r-sidebar"
+            "footer footer footer";
+            gap: 15px;
+            min-height: 100vh;   /* 确保内容不足时也能占满整个屏幕 */
+            padding: 0;
+            margin: 0;
+        }
+        header{
+            grid-area: header;
+            background-color: #F89427;
+            padding: 20px;
+            height: 60px;
+        }
+        .main{
+            grid-area: main;
+            background-color: #3DBFE6;
+            padding: 20px;
+        }
+        .left-sidebar{
+            grid-area: 1-sidebar;
+            background-color: #EC7272;
+            padding: 20px;
+            width: 200px;
+        }
+        .right-sidebar{
+            grid-area: r-sidebar;
+            background-color: #FFEFB2;
+            padding: 20px;
+            width: 200px;
+        }
+        footer{
+            grid-area: footer;
+            background-color: #74C576;
+            padding: 20px;
+            height: 80px;
+        }
+    </style>
+</head>
+<body class="container">
+    <header>header</header>
+    <aside class="left-sidebar">left sidebar</aside>
+    <section class="main">main</section>
+    <aside class="right-sidebar">right sidebar</aside>
+    <footer>footer</footer>
+</body>
+</html>

@@ -1,0 +1,49 @@
+/* 嵌套写法 */
+.page{
+    .header{
+        .name{
+            color: green;
+        }
+        .age{
+            color: red;
+        }
+    }
+}
+
+/* 定义变量 */
+$success-color:#dff0d8;
+.success-bg{
+    background-color: $success-color;
+}
+.success-panel{
+    .panel-heading{
+        background-color: $success-color;
+    }
+    .panel-body{
+        border: 1px solid $success-color;
+    }
+}
+
+/* 模块系统 */
+@import "common";
+@import "popup";
+@import "module_a";
+// <link rel="stylesheet" href="/your/site/site.css">
+
+/* 混入 */
+@mixin message{
+    border:1px;
+    border-radius:2px;
+}
+.window{
+    @include message;
+    color: red;
+}
+.box{
+    @include message;
+    color:green;
+}
+.info{
+    @include message;
+    color: blue;
+}

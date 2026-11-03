@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>响应式页头</title>
+    <style>
+        *,*::before,*::after{   /* 让全局元素和伪元素都包含在盒子里 */
+            box-sizing: border-box;
+        }
+        body{
+            font-family: "Libre Franklin",Arial, Helvetica, sans-serif!important;
+            font-weight: 300;
+            font-size: 18px;
+            line-height: 1.7;
+            padding-right: 0!important;
+            /* !important无视优先级强制生效 */
+        }
+
+        ul{
+            margin-bottom: 0;
+            padding-left: 0;
+        }
+        li{
+            list-style: none;
+        }
+        a{
+            color: #888;
+            text-decoration: none;
+        }
+        .header{
+            position: fixed;   /* 元素会被移出正常文档流，并不为元素预留空间 */
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;   /* header固定在顶部 */
+            z-index: 1000;
+            height: 100px;
+            padding: 26px 15px;
+            box-shadow: 0px 2px 12px gainsboro;
+        }
+        .header .search-wrap{
+            position: relative;
+            height: 60px;
+            width: 100%;
+        }
+        .header .search-box{
+            padding: 0 60px;
+            display: none;
+        }
+        .header .search-wrap input{
+            display: block;   /* 让元素独占一行 */
+            width: 100%;
+            padding: 0 60px;
+            font-size: 14px;
+            color: #888;
+            min-height: 60px;
+            line-height: 1.5;
+            background-color: #f8f8f8;
+            border: 1px solid #f8f8f8;
+        }
+        .header .search-wrap .search-wrap-icon{
+            position: absolute;
+            top: 50%;
+            cursor: pointer;
+            transform: translateY(-50%);   /* 配合top:50%实现垂直居中 */ 
+        }
+        .header .search-wrap-icon.bisearch{
+            left: 20px;
+            font-size: 20px;
+        }
+        .header .search-wrap-icon.bi-x{
+            right: 20px;
+            font-size: 28px;
+        }
+        .header .search-wrap input:focus{
+            color: #212529;
+            border-color: #86b7fe;
+            /* outline: 0; */
+            box-shadow: 0 0 0.25rem gainsboro;
+        }
+        .header .menu{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            left: 20px;
+        }
+        .header .left-menu{
+            display: flex;
+            align-items: center;
+        }
+        .header .menu-list li{
+            padding: 0 10px;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .menu-list-wrap{
+            margin-left: 100px;   /* 菜单右移100px */
+        }
+        .header .menu .logo1{
+            position: absolute;
+            top: 42px;
+            padding: 3px;
+            border: solid 2px black;
+            font-weight: bold;
+        }
+        .header .menu .logo2{
+            display: none;
+        }
+        .header .right-menu li{
+            position: relative;
+            font-size: 24px;
+        }
+        .header .cart-num,.header .wish-num{
+            position: absolute;   /* 使用绝对定位把数字显示在按钮左上方 */
+            right: 5px;
+            top: 2px;
+            padding: 0 6px;
+            height: 19px;
+            line-height: 19px;
+            /* height=line-height实现文本居中 */
+            font-size: 12px;
+            border-radius: 50%;   /* 使用圆形 */
+            background: red;
+        }
+        .header .menu .menu-icon-left{
+            display: none;
+        }
+        @media(max-width:1024px){   /* 适配平板电脑端 */
+            body{
+                font-size: 16px;
+            }
+            .header .menu .head{   /* 隐藏首页链接 */
+                display: none!important;
+            }
+            .header .menu .logo1{
+                display: none;
+            }
+            .header .menu .logo2{
+                display: inline;
+                position: absolute;
+                top: 42px;
+                padding: 3px;
+                border: solid 2px black;
+                font-weight: bold;
+                width: 35px;
+                height: 35px;
+            }
+        }
+        @media(max-width:768px){
+            body{
+                font-size: 14px;
+            }
+            .header .menu .nav-home{
+                display: none;   /* 左侧菜单默认隐藏 */
+                position: absolute;   /* 使用绝对定位让菜单显示在图标下方 */
+                top: 60px;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                border-top: 1px solid #d2d2d7;
+                padding: 0 25px;
+            }
+            .header .menu .menu-icon-left{
+                display: block;
+                font-size: 25px;
+            }
+            .header .menu .logo2{
+                display: inline;
+                font-size: 18px;
+                margin-left: 45px;
+                margin-right: 45px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <link rel="stylesheet" href="../html/content1/bootstrap-icons-1.13.1/bootstrap-icons.css">
+    <header class="header">
+        <nav class="menu-wrap">
+            <!-- 搜索框 -->
+             <div class="search-box">
+                <div class="search-wrap">
+                    <input placeholder="请输入关键词" type="text" autocomplete="off" class="form-control">
+                    <span class="search-wrap-icon bi-search"></span>
+                    <span class="search-wrap-icon bi-x"></span>
+                </div>
+             </div>
+             <div class="menu">
+                <!-- 左侧菜单的指示性图标 -->
+                 <div class="menu-icon-left">
+                    <span class="bi-list"></span>   <!-- 图标 -->
+                 </div>
+                <!-- 左侧菜单 -->
+                <div class="left-menu">
+                    <div class="logo1">Geek Fun</div>
+                    <div class="logo2">GF</div>
+                    <div class="menu-list-wrap">
+                        <div class="indicator left"></div>
+                        <ul class="menu-list">
+                            <li class="nav-home active"><a href="#" class="head">首页</a></li>
+                            <li class="nav-home active"><a href="#">马克杯</a></li>
+                            <li class="nav-home active"><a href="#">啤酒杯</a></li>
+                            <li class="nav-home active"><a href="#">搪瓷杯</a></li>
+                            <li class="nav-home active"><a href="#">杯言杯语</a></li>
+                            <li class="nav-home active"><a href="#">极客范儿</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- 右侧菜单 -->
+                <div class="right-menu">
+                    <div class="indicator right"></div>
+                    <ul class="menu-list">
+                        <li class="bi-search"></li>
+                        <li class="cart-icon"><span class="bi-cart2"><i class="cart-num">2</i></span></li>
+                        <li class="bi-heart"><i class="wish-num">1</i></li>
+                        <li class="bi-box-seam"></li>
+                        <li class="bi-person"></li>
+                    </ul>
+                </div>
+             </div>
+        </nav>
+    </header>
+    <script>
+        // 1. 显示搜索框，隐藏导航菜单
+        function showSearchHandler(){
+            document.querySelector('.header .menu').style.display = 'none';
+            document.querySelector('.header .search-box').style.display = 'block';
+        }
+
+        // 2. 隐藏搜索框，显示导航菜单
+        function hideSearchHandler(){
+            document.querySelector('.header .menu').style.display = 'flex'; // 显式指定flex，避免默认值问题
+            document.querySelector('.header .search-box').style.display = 'none';
+        }
+
+        // 3. 事件绑定移到函数外部，页面加载就执行
+        // 搜索图标点击事件
+        document.querySelector(".right-menu .bi-search").addEventListener("click", showSearchHandler);
+        // 关闭图标点击事件
+        document.querySelector(".search-box .bi-x").addEventListener("click", hideSearchHandler);
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>网格布局</title>
+    <style>
+        body{
+            font-size: 12px;
+            margin: 2rem;
+        }
+        .container{
+            display: grid;
+            border: 1px solid #000;
+            width: 500px;
+            /* grid-template-rows: 80px 80px 80px 80px; */
+            /* grid-template-columns: 100px 100px 100px 100px 100px; */
+            grid-template-rows: repeat(4,80px);   /* 80px重复4次 */
+            grid-template-columns: repeat(5,100px);   /* 100px重复五次 */
+            grid-template-columns: repeat(5,20%);   /* 共5列，每列占20%的宽度，重复5次 */
+        }
+        .container .item{
+            margin: 5px;
+            background: tomato;
+            line-height: 70px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="container">
+    <div class="item item1">1</div>
+    <div class="item item2">2</div>
+    <div class="item item3">3</div>
+    <div class="item item4">4</div>
+    <div class="item item5">5</div>
+    <div class="item item6">6</div>
+    <div class="item item7">7</div>
+</body>
+</html>

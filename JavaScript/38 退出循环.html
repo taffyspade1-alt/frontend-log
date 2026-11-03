@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // let i = 1
+    // while (i <= 5){
+    //   if (i === 3){
+    //     break   /* 退出循环 */
+    //   }
+    //   document.write(`我要吃${i}个包子`)
+    //   i++
+    // }
+    let i = 1
+    while (i <= 5){
+      if (i === 3){
+        i++
+        continue   /* 结束本次循环 继续下一轮循环 */
+      }
+      document.write(`我要吃${i}个包子`)
+      i++
+    }
+    // continue用于排除或跳过某一项，break用于找到结果后续循环不需要继续
+  </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>嵌套的留言布局</title>
+    <style>
+        .media{
+            display: flex;
+            align-items: flex-start;
+            max-width: 600px;
+            border: 1px solid #f2f2f2;
+        }
+        .media-object{
+            margin-right: 15px;
+            max-width: 64px;   /* 头像最大宽度为64px */
+        }
+        .media-body{
+            flex: 1;   /* 内容区占满剩余宽度 */
+        }
+        .media-body>h5{
+            font-size: 1.25em;
+            font-weight: 500;
+            background: #BBBBBD;
+            margin: 0;
+        }
+        .media-body>p{
+            min-height: 100px;
+            background: #BBBBBD;
+        }
+    </style>
+</head>
+<body>
+    <div class="media">
+        <img src="../html/favicon.ico" class="media-object">
+        <div class="media-body">
+            <h5 class="media-heading">嵌套</h5>
+            <p></p>
+            <div class="media">
+                <img src="../html/favicon.ico" class="media-object">
+                <div class="media-body">
+                    <h5 class="media-heading">嵌套</h5>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

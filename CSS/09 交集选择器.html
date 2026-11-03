@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>交集选择器</title>
+    <style>
+        p{   /* 标记选择器 */
+            color: blue;
+        }    
+        p.special{   /* 标记.类别选择器 */
+            color: red;
+        }
+        .special{   /* 类别选择器 */
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <!--交集选择器由两个基本选择器直接连接构成，第一个必须是标记选择器，第二个必须是类别选择器或ID选择器-->
+    <p>普通段落文本（蓝色）</p>
+    <h3>普通标题文本（黑色）</h3>
+    <p class="special">指定了.special类别的段落文本（红色）</p>
+    <h3 class="special">指定了.special类别的标题文本（绿色）</h3>
+</body>
+</html>

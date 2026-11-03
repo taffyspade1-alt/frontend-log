@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>栅格系统2</title>
+    <style>
+        *{
+            box-sizing: border-box;   /* 设置的宽和高直接包含全部内容，不会撑大 */
+        }
+        .container{
+            width: 100%;
+            max-width: 1140px;
+            margin: auto;
+        }
+        .row{
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            margin: 10px;
+            height: 50px;
+            background-color: aliceblue;
+        }
+        .col{
+            flex: 1 0 0;
+            border: 1px solid gray;
+        }
+        .col-6{
+            flex: 0 0 auto;
+            width: 50%;
+            border: 1px solid gray;
+        }
+        .col-5{
+            flex: 0 0 auto;
+            width: 41.67%;
+            border: 1px solid gray;
+        }
+        .col-4{
+            flex: 0 0 auto;
+            width: 33.33%;
+            border: 1px solid gray;
+        }
+        .col-3{
+            flex: 0 0 auto;
+            width: 25%;
+            border: 1px solid gray;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-3">col-3</div>
+            <div class="col-4">col-4</div>
+            <div class="col-5">col-5</div>
+        </div>
+        <div class="row">
+            <div class="col">col</div>
+            <div class="col-6">col-6</div>
+            <div class="col">col</div>
+        </div>  
+    </div>
+</body>
+</html>

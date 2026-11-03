@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    span{
+      text-align: center;
+      border: 1px solid skyblue;
+      height: 30px;
+      width: 80px;
+      display: inline-block;   /* 避免padding/border影响宽度 */
+    }
+  </style>
+</head>
+<body>
+  <script>
+    // function 函数名(){
+    //   函数体
+    // }
+    // 声明
+    function sheet99(){
+      for (let i = 1;i <= 9;i++){
+      for(let j = 1;j <= i;j++){
+        document.write(`<span>${j} × ${i} = ${i * j}</span>`)
+      }
+      document.write('<br>')
+    }
+    }
+    // 调用 函数名()
+    sheet99()
+    sheet99()
+    sheet99()
+  </script>
+</body>
+</html>

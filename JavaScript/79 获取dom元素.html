@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box{
+      width: 200px;
+      height: 200px;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">123</div>
+  <div class="box">abc</div>
+  <p id="nav"></p>
+  <ul class="nav">
+    <li>我的首页</li>
+    <li>产品介绍</li>
+    <li>联系方式</li>
+  </ul>
+  <script>
+    // 获取第一个匹配的元素
+    const box = document.querySelector('div')   /* 选123 */
+    const nav = document.querySelector('#nav')
+    const lis = document.querySelectorAll('ul li')    /* 选所有的ul下的li */
+    console.log(lis)    /* 获得一个伪数组，不能pop或push */
+    for (let i = 0;i < lis.length;i++){
+      console.log(lis[i])   /* 遍历每一个li */
+      lis[i].style.color = 'red'
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>合并单元格</title>
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <td>A1</td> <td colspan="2">A2A3</td> <td>A4</td>   <!-- 合左右单元格 -->
+        </tr>
+        <tr>
+            <td>B1</td> <td>B2</td> <td rowspan="2">B3<br>C3</td> <td>B4</td>   <!-- 合并上下单元格 -->
+        </tr>
+        <tr>
+            <td rowspan="2" colspan="2">C1C2<br>D1D2</td> <td>C4</td>    <!-- 合并上下左右单元格 -->
+        </tr>
+        <tr>
+            <td>D3</td> <td>D4</td>
+        </tr>
+    </table>
+</body>
+</html>

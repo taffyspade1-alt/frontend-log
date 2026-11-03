@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <a href="http://www.itcast.com">页面5秒后自动跳转</a>
+  <script>
+    const a = document.querySelector('a')
+    let num = 5
+    let timer = setInterval(function(){
+      num--
+      a.innerHTML = `页面${num}秒后自动跳转`
+      // 0秒时停止定时器并跳转
+      if (num === 0){
+        clearInterval(timer)
+        location.href = 'http://www.itcast.com'
+      }
+    },1000)
+  </script>
+</body>
+</html>

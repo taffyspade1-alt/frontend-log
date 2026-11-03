@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const arr = ['red','blue','pink']
+    // map方法 遍历数组并返回值
+    const newArr = arr.map(function(ele,index){
+      // console.log(ele)    /* 返回数组元素 */
+      // console.log(index)    /* 索引号 */
+      return ele + '色'   /* 遍历数组元素并在后面添加字 */
+    })
+    console.log(newArr)
+    // join方法 把数组所有元素替换为一个字符串
+    // 括号内为空，用,连接
+    console.log(newArr.join())
+    // 括号内为空字符串，无连接符号
+    console.log(newArr.join(''))
+    // 括号内添加什么就用什么连接
+    console.log(newArr.join('|'))
+  </script>
+</body>
+</html>

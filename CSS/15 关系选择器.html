@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>关系选择器</title>
+    <style>
+         div+p{    /* 相邻兄弟选择器 */
+            background-color: gray;
+        }
+        /* 功能：选中前面相邻元素是<div>标记的<P>标记 */
+        div~p{   /* 相邻兄弟组选择器 */
+            background-color: gray;
+        }
+        /* 会选中多个连续的<p>标记 */
+    </style>
+</head>
+<body>
+    <h1>如何构建一个网页</h1>
+    <div class="outer">
+        <div class="inner">
+            <p>1.自从互联网走进千家万户，人们已经离不开它</p>
+        </div>
+        <p>2.构建一个网站需要进行大量的工作，建议先从简单的工作开始</p>
+    </div>
+    <p>3.首先需要学习一些关于html的基础知识</p>
+    <p>4.然后再学习一些CSS的知识</p>
+</body>
+</html>

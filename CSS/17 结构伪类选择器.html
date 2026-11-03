@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>结构伪类选择器</title>
+    <style>
+        h1:first-child/* 选中h1,并且必须是第一个子元素 */,p:last-child/* 选中p，并且必须是最后一个子元素 */{
+            background-color: gray;
+        }
+        p:nth-child(2)/* 选中p，并且必须是第二个子元素 */,p:nth-last-child(2)/* 选中p，并且必须是倒数第二个子元素 */{
+            border:1px solid #000;   /* 黑色边框 */
+        }
+        p:first-of-type/* 选中p，并且必须是这种元素中的第一个 */,p:nth-of-type(2)/* 选中p，并且必须是这种元素中的第二个 */{
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>标题</h1>
+    <p>第一个段落</p>
+    <p>第二个段落</p>
+    <p>第三个段落</p>
+    <p>第四个段落</p>
+</body>
+</html>

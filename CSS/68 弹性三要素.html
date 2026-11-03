@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>flex</title>
+    <style>
+        .container{
+            display: flex;   /* 设置弹性容器 */
+            flex-direction: row;   /* 主轴方向：水平 */
+            border: 1px solid #000;
+            flex-wrap: wrap;   /* 换行 */
+            width: 300px;
+        }
+        .item{
+            width: 120px;
+            flex-basis: auto;   /* 弹性项的基准宽度 */
+            flex-grow: 1;   /* 将剩余空间三等分，每个div块分到一块 */
+            flex-shrink: 0;   /* 弹性项会超出容器边界 */
+            /* flex: 1 2 3;依次为grow shrink basis */
+            /* flex: initial; 容器大时不扩张，容器小时等量收缩  */
+            /* flex: auto; 等量扩张和收缩 */
+            /* flex: none; 不扩张也不收缩 */
+        }
+        .item1{
+            background-color: #A2CBFA;
+        }
+        .item2{
+            background-color: #F89427;
+        }
+        .item3{
+            background-color: #EC7272;
+            flex-grow: 2;   /* 将剩余空间四等分，item3占四分之二 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="item item1">1</div>
+        <div class="item item2">2</div>
+        <div class="item item3">3</div>
+    </div>
+</body>
+</html>
